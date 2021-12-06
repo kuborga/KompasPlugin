@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoffeeTable", "CoffeeTable\CoffeeTable.csproj", "{76C36D3A-5D73-4482-9A25-A0B522A2C28C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TablePlugin.UI", "CoffeeTable\TablePlugin.UI.csproj", "{76C36D3A-5D73-4482-9A25-A0B522A2C28C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TablePlugin.Model.Kompas", "TablePlugin.Model.Kompas\TablePlugin.Model.Kompas.csproj", "{12C10689-6A54-4701-B489-4613C2A04B2E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TablePlugin.Model.Parameters", "TablePlugin.Model.Parameters\TablePlugin.Model.Parameters.csproj", "{68F9904C-4625-4D23-9B78-1A377C7497A7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{12C10689-6A54-4701-B489-4613C2A04B2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12C10689-6A54-4701-B489-4613C2A04B2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12C10689-6A54-4701-B489-4613C2A04B2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68F9904C-4625-4D23-9B78-1A377C7497A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68F9904C-4625-4D23-9B78-1A377C7497A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68F9904C-4625-4D23-9B78-1A377C7497A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68F9904C-4625-4D23-9B78-1A377C7497A7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
