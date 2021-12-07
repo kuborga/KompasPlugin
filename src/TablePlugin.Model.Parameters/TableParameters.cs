@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace TablePlugin.Model.Parameters
 {
 
-    class TableParameters
+   public class TableParameters
     {
         /// <summary>
         /// Длина столешницы
@@ -30,9 +30,9 @@ namespace TablePlugin.Model.Parameters
         private Parameter _legsDiameters;
 
         /// <summary>
-        /// Длина ножек стола
+        /// Высота ножек стола
         /// </summary>
-        private Parameter _legsLength;
+        private Parameter _legsHeight;
 
         /// <summary>
         /// Конструктор класса TableParameters
@@ -41,15 +41,15 @@ namespace TablePlugin.Model.Parameters
         /// <param name="topWidth">Ширина столешницы</param>
         /// <param name="topHeight">Высота столешницы</param>
         /// <param name="legsDiameters">Диаметр ножек стола</param>
-        /// <param name="legsLength">Длина ножек</param>
+        /// <param name="legsHeight">Длина ножек</param>
         public TableParameters(double topLength, double topWidth, double topHeight,
-            double legsDiameters, double legsLength) 
+            double legsDiameters, double legsHeight) 
         {
             TopLength = new Parameter("Длина столешницы", 400, 800, topLength);
             TopWidth = new Parameter("Ширина столешницы", 400, 800, topWidth);
             TopHeight = new Parameter("Высота столешницы", 20, 80, topHeight);
             LegsDiameters = new Parameter("Диаметр ножек стола", 50, 200, legsDiameters);
-            LegsLength = new Parameter("Длина ножек стола", 400, 700, legsLength);
+            LegsHeight = new Parameter("Высота ножек стола", 400, 700, legsHeight);
         }
 
         /// <summary>
@@ -96,10 +96,12 @@ namespace TablePlugin.Model.Parameters
             get=> _legsDiameters; 
             set
             {
+                double maximimValueLegs = (Math.Max(TopWidth.Value, TopLength.Value)) / 3;
                 if(value.Value >= (TopWidth.Value / 3) || value.Value >= (TopLength.Value / 3))
                 {
-               // TODO: поправить;
-                    throw new ArgumentException($" ошибка зависимых параметров ");
+                    throw new ArgumentException($"- {value.Name} должен быть  меньше " +
+                        $"{Math.Truncate(maximimValueLegs)} мм относительно параметра {TopWidth.Name} " 
+                        + $"и {TopLength.Name} ");
                 }
                 else
                 {
@@ -109,14 +111,14 @@ namespace TablePlugin.Model.Parameters
         }
 
         /// <summary>
-        /// Длина ножек стола
+        /// Высота ножек стола
         /// </summary>
-        public Parameter LegsLength 
+        public Parameter LegsHeight 
         {
-            get => _legsLength;
+            get => _legsHeight;
             set
             {
-                _legsLength = value;
+                _legsHeight = value;
             }
         }
 

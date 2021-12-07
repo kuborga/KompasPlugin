@@ -79,5 +79,15 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TablePlugin.Model.Kompas\TablePlugin.Model.Kompas.csproj">
+      <Project>{12c10689-6a54-4701-b489-4613c2a04b2e}</Project>
+      <Name>TablePlugin.Model.Kompas</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TablePlugin.Model.Parameters\TablePlugin.Model.Parameters.csproj">
+      <Project>{68f9904c-4625-4d23-9b78-1a377c7497a7}</Project>
+      <Name>TablePlugin.Model.Parameters</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

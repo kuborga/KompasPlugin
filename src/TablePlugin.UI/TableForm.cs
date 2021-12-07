@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TablePlugin.Model.Parameters;
+
 
 namespace TablePlugin.UI
 {
@@ -15,6 +17,27 @@ namespace TablePlugin.UI
         public TablePluginForm()
         {
             InitializeComponent();
+        }
+
+        private void BuildButton_Click(object sender, EventArgs e)
+        {
+            try 
+            {
+                TableParameters tableParameters = new TableParameters(
+                    (double)tableTopLengthNum.Value,
+                    (double)tableTopWidthNum.Value,
+                    (double)tableTopHeightNum.Value,
+                    (double)tableLegsDiameterNum.Value,
+                    (double)tableLegsHeightNum.Value);
+            }
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+
+
         }
     }
 }

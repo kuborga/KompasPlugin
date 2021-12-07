@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace TablePlugin.Model.Parameters
 {
     /// <summary>
-    /// Класс  дополнительных параметров журнального столика
+    /// Класс  дополнительных параметров стола
     /// </summary>
     public class Parameter
     {
@@ -32,7 +32,7 @@ namespace TablePlugin.Model.Parameters
         private double _value;
 
         /// <summary>
-        /// Конструктор класса Параметр
+        /// Конструктор класса Parameter
         /// </summary>
         /// <param name="name">Имя параметра</param>
         /// <param name="minimum">Минимальное значение</param>
@@ -73,15 +73,7 @@ namespace TablePlugin.Model.Parameters
             get => _minimum;
             set
             {
-                if (value <= Minimum)
-                {
-                    throw new ArgumentException("Значение параметра " +
-                        "меньше минимума");
-                }
-                else
-                {
-                    _minimum = value;
-                }
+                _minimum = value;
             }
         }
 
