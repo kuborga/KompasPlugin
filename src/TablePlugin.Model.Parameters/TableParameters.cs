@@ -30,30 +30,63 @@ namespace TablePlugin.Model.Parameters
         private Parameter _legsDiameters;
 
         /// <summary>
-        /// Длина ножек
+        /// Длина ножек стола
         /// </summary>
         private Parameter _legsLength;
 
-        // бахнуть тут конструктор
+        /// <summary>
+        /// Конструктор класса TableParameters
+        /// </summary>
+        /// <param name="topLength">Длина столешницы</param>
+        /// <param name="topWidth">Ширина столешницы</param>
+        /// <param name="topHeight">Высота столешницы</param>
+        /// <param name="legsDiameters">Диаметр ножек стола</param>
+        /// <param name="legsLength">Длина ножек</param>
+        public TableParameters(double topLength, double topWidth, double topHeight,
+            double legsDiameters, double legsLength) 
+        {
+            TopLength = new Parameter("Длина столешницы", 400, 800, topLength);
+            TopWidth = new Parameter("Ширина столешницы", 400, 800, topWidth);
+            TopHeight = new Parameter("Высота столешницы", 20, 80, topHeight);
+            LegsDiameters = new Parameter("Диаметр ножек стола", 50, 200, legsDiameters);
+            LegsLength = new Parameter("Длина ножек стола", 400, 700, legsLength);
+        }
 
         /// <summary>
         /// Длина столешницы
         /// </summary>
         public Parameter TopLength 
-        { 
-            get; 
-            set; 
+        {
+            get => _topLength;
+            set
+            {
+                _topLength = value;
+            }
         }
 
         /// <summary>
         /// Ширина столешницы
         /// </summary>
-        public Parameter TopWidth { get; set; }
+        public Parameter TopWidth 
+        {
+            get => _topWidth;
+            set
+            {
+                _topWidth = value;
+            }
+        }
 
         /// <summary>
         /// Высота столешницы
         /// </summary>
-        public Parameter TopHeight { get; set; }
+        public Parameter TopHeight 
+        {
+            get => _topHeight;
+            set
+            {
+                _topHeight = value;
+            }
+        }
 
         /// <summary>
         /// Диаметр ножек стола
@@ -76,9 +109,16 @@ namespace TablePlugin.Model.Parameters
         }
 
         /// <summary>
-        /// Длина ножек
+        /// Длина ножек стола
         /// </summary>
-        public Parameter legsLength { get; set; }
+        public Parameter LegsLength 
+        {
+            get => _legsLength;
+            set
+            {
+                _legsLength = value;
+            }
+        }
 
     }
 }
