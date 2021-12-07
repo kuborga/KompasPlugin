@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace CoffeeTable
+namespace TablePlugin.UI
 {
-    public partial class Form1 : Form
+    public partial class TablePluginForm : Form
     {
-        public Form1()
+        public TablePluginForm()
         {
             InitializeComponent();
         }

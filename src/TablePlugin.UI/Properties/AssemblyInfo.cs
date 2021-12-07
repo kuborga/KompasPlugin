@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // Общие сведения об этой сборке предоставляются следующим набором
 // набора атрибутов. Измените значения этих атрибутов для изменения сведений,
 // связанных со сборкой.
-[assembly: AssemblyTitle("CoffeeTable")]
+[assembly: AssemblyTitle("TablePlugin.UI")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("CoffeeTable")]
+[assembly: AssemblyProduct("TablePlugin.UI")]
 [assembly: AssemblyCopyright("Copyright ©  2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // Следующий GUID служит для идентификации библиотеки типов, если этот проект будет видимым для COM
-[assembly: Guid("76c36d3a-5d73-4482-9a25-a0b522a2c28c")]
+[assembly: Guid("79a0c2a3-7210-4152-a0dc-3b7516299915")]
 
 // Сведения о версии сборки состоят из указанных ниже четырех значений:
 //
