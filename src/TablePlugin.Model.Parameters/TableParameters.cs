@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace TablePlugin.Model.Parameters
 {
-
+    /// <summary>
+    /// Класс параметров стола
+    /// </summary>
    public class TableParameters
     {
         /// <summary>
@@ -100,8 +102,8 @@ namespace TablePlugin.Model.Parameters
                 if(value.Value >= (TopWidth.Value / 3) || value.Value >= (TopLength.Value / 3))
                 {
                     throw new ArgumentException($"- {value.Name} должен быть  меньше " +
-                        $"{Math.Truncate(maximimValueLegs)} мм относительно параметра {TopWidth.Name} " 
-                        + $"и {TopLength.Name} ");
+                        $"{Math.Truncate(maximimValueLegs)} мм относительно параметра "
+                        + $" {TopWidth.Name} и {TopLength.Name} ");
                 }
                 else
                 {
