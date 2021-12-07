@@ -54,7 +54,14 @@ namespace TablePlugin.Model.Parameters
             get => _name;
             set
             {
-                _name = value;
+                if (String.IsNullOrEmpty(value))
+                {
+                    throw new ArgumentException("Имя параметра не может быть пустым");
+                }
+                else
+                {
+                    _name = value;
+                }
             }
         }
 
@@ -66,7 +73,15 @@ namespace TablePlugin.Model.Parameters
             get => _minimum;
             set
             {
-                _minimum = value;
+                if (value <= Minimum)
+                {
+                    throw new ArgumentException("Значение параметра " +
+                        "меньше минимума");
+                }
+                else
+                {
+                    _minimum = value;
+                }
             }
         }
 
@@ -90,7 +105,15 @@ namespace TablePlugin.Model.Parameters
             get => _value;
             set
             {
-                _value = value;
+                if (value < Minimum || value > Maximum)
+                {
+                    throw new ArgumentException($"- {Name}: размер выходит за диапазон" +
+                        $" от {Minimum} до {Maximum} мм");
+                }
+                else
+                {
+                    _value = value;
+                }
             }
         }
 
