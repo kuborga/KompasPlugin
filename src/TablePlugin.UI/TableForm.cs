@@ -8,12 +8,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TablePlugin.Model.Parameters;
-
+using TablePlugin.Model.Kompas;
 
 namespace TablePlugin.UI
 {
     public partial class TablePluginForm : Form
     {
+
+        private TableBuilder _tableBuilder;
+
         public TablePluginForm()
         {
             InitializeComponent();
@@ -29,6 +32,9 @@ namespace TablePlugin.UI
                     (double)tableTopHeightNum.Value,
                     (double)tableLegsDiameterNum.Value,
                     (double)tableLegsHeightNum.Value);
+
+                _tableBuilder = _tableBuilder ?? new TableBuilder();
+                _tableBuilder.Build(tableParameters);
             }
             catch (ArgumentException ex)
             {

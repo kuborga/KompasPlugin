@@ -98,11 +98,11 @@ namespace TablePlugin.Model.Parameters
             get=> _legsDiameters; 
             set
             {
-                double maximimValueLegs = (Math.Max(TopWidth.Value, TopLength.Value)) / 3;
+                double maximumValueLegs = (Math.Max(TopWidth.Value, TopLength.Value)) / 3;
                 if(value.Value >= (TopWidth.Value / 3) || value.Value >= (TopLength.Value / 3))
                 {
                     throw new ArgumentException($"- {value.Name} должен быть  меньше " +
-                        $"{Math.Truncate(maximimValueLegs)} мм относительно параметра "
+                        $"{Math.Truncate(maximumValueLegs)} мм относительно параметра "
                         + $" {TopWidth.Name} и {TopLength.Name} ");
                 }
                 else
@@ -115,7 +115,7 @@ namespace TablePlugin.Model.Parameters
         /// <summary>
         /// Высота ножек стола
         /// </summary>
-        public Parameter LegsHeight 
+        public  Parameter LegsHeight 
         {
             get => _legsHeight;
             set
