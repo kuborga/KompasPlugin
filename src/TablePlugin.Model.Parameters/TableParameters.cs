@@ -9,7 +9,7 @@ namespace TablePlugin.Model.Parameters
     /// <summary>
     /// Класс параметров стола
     /// </summary>
-   public class TableParameters
+    public class TableParameters
     {
         /// <summary>
         /// Длина столешницы
@@ -27,7 +27,7 @@ namespace TablePlugin.Model.Parameters
         private Parameter _topHeight;
 
         /// <summary>
-        /// Диаметр ножек стола
+        /// Диаметр основания ножек стола
         /// </summary>
         private Parameter _legsDiameters;
 
@@ -45,19 +45,25 @@ namespace TablePlugin.Model.Parameters
         /// <param name="legsDiameters">Диаметр ножек стола</param>
         /// <param name="legsHeight">Длина ножек</param>
         public TableParameters(double topLength, double topWidth, double topHeight,
-            double legsDiameters, double legsHeight) 
+            double legsDiameters, double legsHeight)
         {
             TopLength = new Parameter("Длина столешницы", 400, 800, topLength);
             TopWidth = new Parameter("Ширина столешницы", 400, 800, topWidth);
             TopHeight = new Parameter("Высота столешницы", 20, 80, topHeight);
             LegsDiameters = new Parameter("Диаметр ножек стола", 50, 200, legsDiameters);
             LegsHeight = new Parameter("Высота ножек стола", 400, 700, legsHeight);
+
+            if (TopHeight.Value + LegsHeight.Value <= 440)
+            {
+                throw new ArgumentException($"- Общая высота стола({TopHeight.Name} + " +
+                    $"{LegsHeight.Name})  должна быть больше 400 мм");
+            }
         }
 
         /// <summary>
         /// Длина столешницы
         /// </summary>
-        public Parameter TopLength 
+        public Parameter TopLength
         {
             get => _topLength;
             set
@@ -69,7 +75,7 @@ namespace TablePlugin.Model.Parameters
         /// <summary>
         /// Ширина столешницы
         /// </summary>
-        public Parameter TopWidth 
+        public Parameter TopWidth
         {
             get => _topWidth;
             set
@@ -81,7 +87,7 @@ namespace TablePlugin.Model.Parameters
         /// <summary>
         /// Высота столешницы
         /// </summary>
-        public Parameter TopHeight 
+        public Parameter TopHeight
         {
             get => _topHeight;
             set
@@ -91,15 +97,15 @@ namespace TablePlugin.Model.Parameters
         }
 
         /// <summary>
-        /// Диаметр ножек стола
+        /// Диаметр основания ножек стола
         /// </summary>
-        public Parameter LegsDiameters 
-        { 
-            get=> _legsDiameters; 
+        public Parameter LegsDiameters
+        {
+            get => _legsDiameters;
             set
             {
                 double maximumValueLegs = (Math.Max(TopWidth.Value, TopLength.Value)) / 3;
-                if(value.Value >= (TopWidth.Value / 3) || value.Value >= (TopLength.Value / 3))
+                if (value.Value >= (TopWidth.Value / 3) || value.Value >= (TopLength.Value / 3))
                 {
                     throw new ArgumentException($"- {value.Name} должен быть  меньше " +
                         $"{Math.Truncate(maximumValueLegs)} мм относительно параметра "
@@ -115,7 +121,7 @@ namespace TablePlugin.Model.Parameters
         /// <summary>
         /// Высота ножек стола
         /// </summary>
-        public  Parameter LegsHeight 
+        public Parameter LegsHeight
         {
             get => _legsHeight;
             set
@@ -123,6 +129,5 @@ namespace TablePlugin.Model.Parameters
                 _legsHeight = value;
             }
         }
-
     }
 }

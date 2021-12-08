@@ -42,7 +42,6 @@ namespace TablePlugin.Model.Kompas
             var ksDoc = KsObject.Document3D();
             ksDoc.Create(false, true);
             Part = ksDoc.GetPart((short)Part_Type.pTop_Part);
-
             KsObject.Visible = true;
             KsObject.ActivateControllerAPI();
         }

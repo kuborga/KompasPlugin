@@ -106,8 +106,9 @@ namespace TablePlugin.Model.Parameters
                 {
                     _value = value;
                 }
+
+
             }
         }
-
     }
 }
