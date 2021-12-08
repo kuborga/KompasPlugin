@@ -29,42 +29,42 @@ namespace TablePlugin.UI
         /// </summary>
         private void InitializeComponent()
         {
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.tableTopGroupBox = new System.Windows.Forms.GroupBox();
             this.tableTopHeightNum = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
             this.tableTopWidthNum = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
             this.tableTopLengthNum = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.legsParameters = new System.Windows.Forms.GroupBox();
             this.tableLegsDiameterNum = new System.Windows.Forms.NumericUpDown();
             this.label5 = new System.Windows.Forms.Label();
             this.tableLegsHeightNum = new System.Windows.Forms.NumericUpDown();
             this.label6 = new System.Windows.Forms.Label();
             this.BuildButton = new System.Windows.Forms.Button();
-            this.groupBox1.SuspendLayout();
+            this.tableTopGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tableTopHeightNum)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tableTopWidthNum)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tableTopLengthNum)).BeginInit();
-            this.groupBox2.SuspendLayout();
+            this.legsParameters.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tableLegsDiameterNum)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tableLegsHeightNum)).BeginInit();
             this.SuspendLayout();
             // 
-            // groupBox1
+            // tableTopGroupBox
             // 
-            this.groupBox1.Controls.Add(this.tableTopHeightNum);
-            this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.tableTopWidthNum);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.tableTopLengthNum);
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(33, 24);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(200, 118);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Параметры столешницы";
+            this.tableTopGroupBox.Controls.Add(this.tableTopHeightNum);
+            this.tableTopGroupBox.Controls.Add(this.label3);
+            this.tableTopGroupBox.Controls.Add(this.tableTopWidthNum);
+            this.tableTopGroupBox.Controls.Add(this.label2);
+            this.tableTopGroupBox.Controls.Add(this.tableTopLengthNum);
+            this.tableTopGroupBox.Controls.Add(this.label1);
+            this.tableTopGroupBox.Location = new System.Drawing.Point(33, 24);
+            this.tableTopGroupBox.Name = "tableTopGroupBox";
+            this.tableTopGroupBox.Size = new System.Drawing.Size(200, 118);
+            this.tableTopGroupBox.TabIndex = 0;
+            this.tableTopGroupBox.TabStop = false;
+            this.tableTopGroupBox.Text = "Параметры столешницы";
             // 
             // tableTopHeightNum
             // 
@@ -139,18 +139,18 @@ namespace TablePlugin.UI
             this.label1.TabIndex = 0;
             this.label1.Text = "Длина (400 - 800) мм";
             // 
-            // groupBox2
+            // legsParameters
             // 
-            this.groupBox2.Controls.Add(this.tableLegsDiameterNum);
-            this.groupBox2.Controls.Add(this.label5);
-            this.groupBox2.Controls.Add(this.tableLegsHeightNum);
-            this.groupBox2.Controls.Add(this.label6);
-            this.groupBox2.Location = new System.Drawing.Point(33, 161);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(200, 94);
-            this.groupBox2.TabIndex = 1;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Параметры ножек";
+            this.legsParameters.Controls.Add(this.tableLegsDiameterNum);
+            this.legsParameters.Controls.Add(this.label5);
+            this.legsParameters.Controls.Add(this.tableLegsHeightNum);
+            this.legsParameters.Controls.Add(this.label6);
+            this.legsParameters.Location = new System.Drawing.Point(33, 161);
+            this.legsParameters.Name = "legsParameters";
+            this.legsParameters.Size = new System.Drawing.Size(200, 94);
+            this.legsParameters.TabIndex = 1;
+            this.legsParameters.TabStop = false;
+            this.legsParameters.Text = "Параметры ножек";
             // 
             // tableLegsDiameterNum
             // 
@@ -206,9 +206,9 @@ namespace TablePlugin.UI
             // 
             // BuildButton
             // 
-            this.BuildButton.Location = new System.Drawing.Point(63, 270);
+            this.BuildButton.Location = new System.Drawing.Point(53, 261);
             this.BuildButton.Name = "BuildButton";
-            this.BuildButton.Size = new System.Drawing.Size(115, 34);
+            this.BuildButton.Size = new System.Drawing.Size(160, 35);
             this.BuildButton.TabIndex = 2;
             this.BuildButton.Text = "Построить";
             this.BuildButton.UseVisualStyleBackColor = true;
@@ -218,23 +218,23 @@ namespace TablePlugin.UI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 312);
+            this.ClientSize = new System.Drawing.Size(264, 312);
             this.Controls.Add(this.BuildButton);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.legsParameters);
+            this.Controls.Add(this.tableTopGroupBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.MaximumSize = new System.Drawing.Size(300, 350);
-            this.MinimumSize = new System.Drawing.Size(300, 350);
+            this.MaximumSize = new System.Drawing.Size(280, 350);
+            this.MinimumSize = new System.Drawing.Size(280, 350);
             this.Name = "TablePluginForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "TablePlugin";
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.tableTopGroupBox.ResumeLayout(false);
+            this.tableTopGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tableTopHeightNum)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tableTopWidthNum)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tableTopLengthNum)).EndInit();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
+            this.legsParameters.ResumeLayout(false);
+            this.legsParameters.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tableLegsDiameterNum)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tableLegsHeightNum)).EndInit();
             this.ResumeLayout(false);
@@ -243,14 +243,14 @@ namespace TablePlugin.UI
 
         #endregion
 
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox tableTopGroupBox;
         private System.Windows.Forms.NumericUpDown tableTopHeightNum;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.NumericUpDown tableTopWidthNum;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.NumericUpDown tableTopLengthNum;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox legsParameters;
         private System.Windows.Forms.NumericUpDown tableLegsDiameterNum;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.NumericUpDown tableLegsHeightNum;
