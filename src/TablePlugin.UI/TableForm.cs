@@ -12,16 +12,29 @@ using TablePlugin.Model.Kompas;
 
 namespace TablePlugin.UI
 {
+    /// <summary>
+    /// Класс для работы формы плагина
+    /// </summary>
     public partial class TablePluginForm : Form
     {
-
+        /// <summary>
+        /// Параметры стола
+        /// </summary>
         private TableBuilder _tableBuilder;
 
+        /// <summary>
+        /// Конструктор класса(создан системой) TablePluginForm
+        /// </summary>
         public TablePluginForm()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Обработчик кнопки "Построить"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BuildButton_Click(object sender, EventArgs e)
         {
             try 
@@ -39,11 +52,8 @@ namespace TablePlugin.UI
             catch (ArgumentException ex)
             {
                 MessageBox.Show(ex.Message, "Ошибка",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-
-
         }
     }
 }
