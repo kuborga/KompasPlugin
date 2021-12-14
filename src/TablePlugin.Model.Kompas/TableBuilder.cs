@@ -38,7 +38,6 @@ namespace TablePlugin.Model.Kompas
             CreateTopTable();
             CreateTableLegs();
         }
-
         /// <summary>
         /// Метод для построения столешницы
         /// </summary>
@@ -55,13 +54,15 @@ namespace TablePlugin.Model.Kompas
             rectangleParam.x = 0;
             rectangleParam.y = 0;
             rectangleParam.ang = 0;
-            rectangleParam.height = _tableParameters.TopWidth.Value;
-            rectangleParam.width = _tableParameters.TopLength.Value;
+
+            rectangleParam.height = _tableParameters.GetValue(ParameterType.TableTopWidth);
+            rectangleParam.width = _tableParameters.GetValue(ParameterType.TableTopLength);
             rectangleParam.style = 1;
             doc2D.ksRectangle(rectangleParam);
 
             sketchDef.EndEdit();
-            PressOutSketch(sketchDef, _tableParameters.TopHeight.Value);
+            PressOutSketch(sketchDef, _tableParameters.
+                GetValue(ParameterType.TableTopHeight));
         }
 
         /// <summary>
@@ -74,7 +75,8 @@ namespace TablePlugin.Model.Kompas
             var doc2D = (ksDocument2D)sketchDef.BeginEdit();
 
             const double offsetCoordinate = 30.0;
-            double legsValue = _tableParameters.LegsDiameters.Value;
+            double legsValue = _tableParameters.
+                GetValue(ParameterType.TableLegsDiameter);
 
             // Координаты центров ножек стола
             var x = new double[4];
@@ -83,26 +85,36 @@ namespace TablePlugin.Model.Kompas
             x[0] = offsetCoordinate + (legsValue / 2);
             y[0] = offsetCoordinate + (legsValue / 2);
 
-            x[1] = _tableParameters.TopLength.Value - (legsValue / 2) - offsetCoordinate;
-            y[1] = _tableParameters.TopWidth.Value - (legsValue / 2) - offsetCoordinate;
+            x[1] = _tableParameters.
+                       GetValue(ParameterType.TableTopLength) 
+                   - (legsValue / 2) - offsetCoordinate;
+            y[1] = _tableParameters.GetValue(
+                ParameterType.TableTopWidth) - (legsValue / 2) 
+                                             - offsetCoordinate;
 
             x[2] = offsetCoordinate + (legsValue / 2);
-            y[2] = _tableParameters.TopWidth.Value - (legsValue / 2) - offsetCoordinate;
+            y[2] = _tableParameters.GetValue(
+                ParameterType.TableTopWidth) - (legsValue / 2) 
+                                             - offsetCoordinate;
 
-            x[3] = _tableParameters.TopLength.Value - (legsValue / 2) - offsetCoordinate;
+            x[3] = _tableParameters.GetValue(
+                ParameterType.TableTopLength) - (legsValue / 2) 
+                                              - offsetCoordinate;
             y[3] = (legsValue / 2) + offsetCoordinate;
 
             // Создание окружностей основая ножек
             for (var i = 0; i < x.Length; i++)
             {
-                doc2D.ksCircle(x[i], y[i], (_tableParameters.LegsDiameters.Value / 2), 1);
+                doc2D.ksCircle(x[i], y[i], (_tableParameters.
+                    GetValue(ParameterType.TableLegsDiameter) / 2), 1);
             }
 
             // Конец редактирования эскиза
             sketchDef.EndEdit();
 
             // Выдавить
-            PressOutSketch(sketchDef, _tableParameters.LegsHeight.Value, side: false);
+            PressOutSketch(sketchDef, _tableParameters.
+                GetValue(ParameterType.TableLegsHeight), side: false);
         }
 
         /// <summary>

@@ -12,122 +12,107 @@ namespace TablePlugin.Model.Parameters
     public class TableParameters
     {
         /// <summary>
-        /// Длина столешницы
+        /// Словарь параметров класса <see cref="TableParameters"/>
         /// </summary>
-        private Parameter _topLength;
-
-        /// <summary>
-        /// Ширина столешницы
-        /// </summary>
-        private Parameter _topWidth;
-
-        /// <summary>
-        /// Высота столешницы
-        /// </summary>
-        private Parameter _topHeight;
-
-        /// <summary>
-        /// Диаметр основания ножек стола
-        /// </summary>
-        private Parameter _legsDiameters;
-
-        /// <summary>
-        /// Высота ножек стола
-        /// </summary>
-        private Parameter _legsHeight;
-
-        /// <summary>
-        /// Конструктор класса TableParameters
-        /// </summary>
-        /// <param name="topLength">Длина столешницы</param>
-        /// <param name="topWidth">Ширина столешницы</param>
-        /// <param name="topHeight">Высота столешницы</param>
-        /// <param name="legsDiameters">Диаметр ножек стола</param>
-        /// <param name="legsHeight">Длина ножек</param>
-        public TableParameters(double topLength, double topWidth, double topHeight,
-            double legsDiameters, double legsHeight)
-        {
-            TopLength = new Parameter("Длина столешницы", 400, 800, topLength);
-            TopWidth = new Parameter("Ширина столешницы", 400, 800, topWidth);
-            TopHeight = new Parameter("Высота столешницы", 20, 80, topHeight);
-            LegsDiameters = new Parameter("Диаметр ножек стола", 50, 200, legsDiameters);
-            LegsHeight = new Parameter("Высота ножек стола", 400, 700, legsHeight);
-
-            if (TopHeight.Value + LegsHeight.Value <= 440)
+        private readonly Dictionary<ParameterType, Parameter> _parameters =
+            new Dictionary<ParameterType, Parameter>
             {
-                throw new ArgumentException($"- Общая высота стола({TopHeight.Name} + " +
-                    $"{LegsHeight.Name})  должна быть больше 400 мм");
-            }
-        }
+                { ParameterType.TableTopLength,new Parameter(400,800,600)},
+                { ParameterType.TableTopWidth,new Parameter(400,800,600)},
+                { ParameterType.TableTopHeight,new Parameter(20,80,60)},
+                { ParameterType.TableLegsDiameter,new Parameter(50,200,125)},
+                { ParameterType.TableLegsHeight,new Parameter(400,700,550)},
+            };
 
         /// <summary>
-        /// Длина столешницы
+        /// Конструктор класс <see cref="TableParameters"/> без параметров
         /// </summary>
-        public Parameter TopLength
-        {
-            get => _topLength;
-            set
-            {
-                _topLength = value;
-            }
-        }
+        public TableParameters()
+        { }
 
         /// <summary>
-        /// Ширина столешницы
+        /// Установить значение параметра
         /// </summary>
-        public Parameter TopWidth
+        /// <param name="parameterType">Тип параметра</param>
+        /// <param name="value">Значение параметра</param>
+        public void SetValue(ParameterType parameterType, double value)
         {
-            get => _topWidth;
-            set
-            {
-                _topWidth = value;
-            }
-        }
+            var minValue = _parameters[parameterType].Minimum;
+            var maxValue = _parameters[parameterType].Maximum;
 
-        /// <summary>
-        /// Высота столешницы
-        /// </summary>
-        public Parameter TopHeight
-        {
-            get => _topHeight;
-            set
+            switch (parameterType)
             {
-                _topHeight = value;
-            }
-        }
-
-        /// <summary>
-        /// Диаметр основания ножек стола
-        /// </summary>
-        public Parameter LegsDiameters
-        {
-            get => _legsDiameters;
-            set
-            {
-                double maximumValueLegs = (Math.Max(TopWidth.Value, TopLength.Value)) / 3;
-                if (value.Value >= (TopWidth.Value / 3) || value.Value >= (TopLength.Value / 3))
+                case ParameterType.TableTopLength:
+                    break;
+                case ParameterType.TableTopWidth:
+                    break;
+                case ParameterType.TableTopHeight:
+                    break;
+                case ParameterType.TableLegsHeight:
+                    break;
+                case ParameterType.TableLegsDiameter:
                 {
-                    throw new ArgumentException($"- {value.Name} должен быть  меньше " +
-                        $"{Math.Truncate(maximumValueLegs)} мм относительно параметра "
-                        + $" {TopWidth.Name} и {TopLength.Name} ");
-                }
-                else
-                {
-                    _legsDiameters = value;
+                    break;
                 }
             }
+
+            _parameters[parameterType].Minimum = minValue;
+            _parameters[parameterType].Maximum = maxValue;
+            _parameters[parameterType].Value = value;
+            if (parameterType == ParameterType.TableTopHeight || parameterType == ParameterType.TableLegsHeight)
+            {
+                CheckingFullHeightTable();
+            }
+
+            if (parameterType == ParameterType.TableLegsDiameter)
+            {
+                CheckingDiameterTanbleLegs();
+            }
+
         }
 
         /// <summary>
-        /// Высота ножек стола
+        /// Получить значение параметра
         /// </summary>
-        public Parameter LegsHeight
+        /// <param name="parameterType">Тип параметра</param>
+        /// <returns>Значение параметра</returns>
+        public double GetValue(ParameterType parameterType)
         {
-            get => _legsHeight;
-            set
+            return _parameters[parameterType].Value;
+        }
+
+        /// <summary>
+        /// Проверка общей высоты стола
+        /// </summary>
+        private void CheckingFullHeightTable()
+        {
+            var tableTopHeightName = _parameters[ParameterType.TableTopHeight].Name;
+            var tableLegHeightName = _parameters[ParameterType.TableLegsHeight].Name;
+            var fullHeightTable = _parameters[ParameterType.TableTopHeight].Value
+                + _parameters[ParameterType.TableLegsHeight].Value;
+            // TODO
+            if (fullHeightTable < 440)
             {
-                _legsHeight = value;
+                throw new ArgumentException($"Общая высота стола({tableTopHeightName} " +
+                                            $"+ {tableLegHeightName}) " +
+                                            $"должна быть больше либо равна 440 мм");
             }
         }
+
+        /// <summary>
+        /// Проверки диаметра оснований ножек стола
+        /// </summary>
+        private void CheckingDiameterTanbleLegs()
+        {
+            var tableTopLenght = _parameters[ParameterType.TableTopLength].Value;
+            var tableTopWidth = _parameters[ParameterType.TableTopWidth].Value;
+            var tableLegsDiameter = _parameters[ParameterType.TableLegsDiameter].Value;
+           
+            if (tableLegsDiameter >= (tableTopLenght / 3) || tableLegsDiameter >= (tableTopWidth / 3) )
+            {
+                throw new ArgumentException("Диаметр ножек стола должен быть меньше");
+            }
+        }
+
     }
 }

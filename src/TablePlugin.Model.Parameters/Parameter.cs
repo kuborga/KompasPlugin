@@ -38,9 +38,8 @@ namespace TablePlugin.Model.Parameters
         /// <param name="minimum">Минимальное значение</param>
         /// <param name="maximum">Максимальное значение</param>
         /// <param name="value">Значение</param>
-        public Parameter(string name, double minimum, double maximum, double value)
+        public Parameter(double minimum, double maximum, double value)
         {
-            Name = name;
             Minimum = minimum;
             Maximum = maximum;
             Value = value;
@@ -99,7 +98,7 @@ namespace TablePlugin.Model.Parameters
             {
                 if (value < Minimum || value > Maximum)
                 {
-                    throw new ArgumentException($"- {Name}: размер выходит за диапазон" +
+                    throw new ArgumentException($"{Name}: размер выходит за диапазон" +
                         $" от {Minimum} до {Maximum} мм");
                 }
                 else

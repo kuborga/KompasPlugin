@@ -30,34 +30,34 @@ namespace TablePlugin.UI
         private void InitializeComponent()
         {
             this.tableTopGroupBox = new System.Windows.Forms.GroupBox();
-            this.tableTopHeightNum = new System.Windows.Forms.NumericUpDown();
+            this.TableTopHeightNum = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
-            this.tableTopWidthNum = new System.Windows.Forms.NumericUpDown();
+            this.TableTopWidthNum = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
-            this.tableTopLengthNum = new System.Windows.Forms.NumericUpDown();
+            this.TableTopLengthNum = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.legsParameters = new System.Windows.Forms.GroupBox();
-            this.tableLegsDiameterNum = new System.Windows.Forms.NumericUpDown();
+            this.TableLegsDiameterNum = new System.Windows.Forms.NumericUpDown();
             this.label5 = new System.Windows.Forms.Label();
-            this.tableLegsHeightNum = new System.Windows.Forms.NumericUpDown();
+            this.TableLegsHeightNum = new System.Windows.Forms.NumericUpDown();
             this.label6 = new System.Windows.Forms.Label();
             this.BuildButton = new System.Windows.Forms.Button();
             this.tableTopGroupBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tableTopHeightNum)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tableTopWidthNum)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tableTopLengthNum)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TableTopHeightNum)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TableTopWidthNum)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TableTopLengthNum)).BeginInit();
             this.legsParameters.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tableLegsDiameterNum)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tableLegsHeightNum)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TableLegsDiameterNum)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TableLegsHeightNum)).BeginInit();
             this.SuspendLayout();
             // 
             // tableTopGroupBox
             // 
-            this.tableTopGroupBox.Controls.Add(this.tableTopHeightNum);
+            this.tableTopGroupBox.Controls.Add(this.TableTopHeightNum);
             this.tableTopGroupBox.Controls.Add(this.label3);
-            this.tableTopGroupBox.Controls.Add(this.tableTopWidthNum);
+            this.tableTopGroupBox.Controls.Add(this.TableTopWidthNum);
             this.tableTopGroupBox.Controls.Add(this.label2);
-            this.tableTopGroupBox.Controls.Add(this.tableTopLengthNum);
+            this.tableTopGroupBox.Controls.Add(this.TableTopLengthNum);
             this.tableTopGroupBox.Controls.Add(this.label1);
             this.tableTopGroupBox.Location = new System.Drawing.Point(33, 24);
             this.tableTopGroupBox.Name = "tableTopGroupBox";
@@ -66,17 +66,18 @@ namespace TablePlugin.UI
             this.tableTopGroupBox.TabStop = false;
             this.tableTopGroupBox.Text = "Параметры столешницы";
             // 
-            // tableTopHeightNum
+            // TableTopHeightNum
             // 
-            this.tableTopHeightNum.Location = new System.Drawing.Point(144, 91);
-            this.tableTopHeightNum.Name = "tableTopHeightNum";
-            this.tableTopHeightNum.Size = new System.Drawing.Size(50, 20);
-            this.tableTopHeightNum.TabIndex = 5;
-            this.tableTopHeightNum.Value = new decimal(new int[] {
+            this.TableTopHeightNum.Location = new System.Drawing.Point(144, 91);
+            this.TableTopHeightNum.Name = "TableTopHeightNum";
+            this.TableTopHeightNum.Size = new System.Drawing.Size(50, 20);
+            this.TableTopHeightNum.TabIndex = 5;
+            this.TableTopHeightNum.Value = new decimal(new int[] {
             50,
             0,
             0,
             0});
+            this.TableTopHeightNum.ValueChanged += new System.EventHandler(this.AnyValueNumericUpDown_ValueChanged);
             // 
             // label3
             // 
@@ -87,22 +88,23 @@ namespace TablePlugin.UI
             this.label3.TabIndex = 4;
             this.label3.Text = "Высота (20 - 80) мм";
             // 
-            // tableTopWidthNum
+            // TableTopWidthNum
             // 
-            this.tableTopWidthNum.Location = new System.Drawing.Point(144, 57);
-            this.tableTopWidthNum.Maximum = new decimal(new int[] {
+            this.TableTopWidthNum.Location = new System.Drawing.Point(144, 57);
+            this.TableTopWidthNum.Maximum = new decimal(new int[] {
             900,
             0,
             0,
             0});
-            this.tableTopWidthNum.Name = "tableTopWidthNum";
-            this.tableTopWidthNum.Size = new System.Drawing.Size(50, 20);
-            this.tableTopWidthNum.TabIndex = 3;
-            this.tableTopWidthNum.Value = new decimal(new int[] {
+            this.TableTopWidthNum.Name = "TableTopWidthNum";
+            this.TableTopWidthNum.Size = new System.Drawing.Size(50, 20);
+            this.TableTopWidthNum.TabIndex = 3;
+            this.TableTopWidthNum.Value = new decimal(new int[] {
             700,
             0,
             0,
             0});
+            this.TableTopWidthNum.ValueChanged += new System.EventHandler(this.AnyValueNumericUpDown_ValueChanged);
             // 
             // label2
             // 
@@ -113,22 +115,23 @@ namespace TablePlugin.UI
             this.label2.TabIndex = 2;
             this.label2.Text = "Ширина (400 - 800) мм";
             // 
-            // tableTopLengthNum
+            // TableTopLengthNum
             // 
-            this.tableTopLengthNum.Location = new System.Drawing.Point(144, 23);
-            this.tableTopLengthNum.Maximum = new decimal(new int[] {
+            this.TableTopLengthNum.Location = new System.Drawing.Point(144, 23);
+            this.TableTopLengthNum.Maximum = new decimal(new int[] {
             900,
             0,
             0,
             0});
-            this.tableTopLengthNum.Name = "tableTopLengthNum";
-            this.tableTopLengthNum.Size = new System.Drawing.Size(50, 20);
-            this.tableTopLengthNum.TabIndex = 1;
-            this.tableTopLengthNum.Value = new decimal(new int[] {
+            this.TableTopLengthNum.Name = "TableTopLengthNum";
+            this.TableTopLengthNum.Size = new System.Drawing.Size(50, 20);
+            this.TableTopLengthNum.TabIndex = 1;
+            this.TableTopLengthNum.Value = new decimal(new int[] {
             700,
             0,
             0,
             0});
+            this.TableTopLengthNum.ValueChanged += new System.EventHandler(this.AnyValueNumericUpDown_ValueChanged);
             // 
             // label1
             // 
@@ -141,9 +144,9 @@ namespace TablePlugin.UI
             // 
             // legsParameters
             // 
-            this.legsParameters.Controls.Add(this.tableLegsDiameterNum);
+            this.legsParameters.Controls.Add(this.TableLegsDiameterNum);
             this.legsParameters.Controls.Add(this.label5);
-            this.legsParameters.Controls.Add(this.tableLegsHeightNum);
+            this.legsParameters.Controls.Add(this.TableLegsHeightNum);
             this.legsParameters.Controls.Add(this.label6);
             this.legsParameters.Location = new System.Drawing.Point(33, 161);
             this.legsParameters.Name = "legsParameters";
@@ -152,22 +155,23 @@ namespace TablePlugin.UI
             this.legsParameters.TabStop = false;
             this.legsParameters.Text = "Параметры ножек";
             // 
-            // tableLegsDiameterNum
+            // TableLegsDiameterNum
             // 
-            this.tableLegsDiameterNum.Location = new System.Drawing.Point(144, 57);
-            this.tableLegsDiameterNum.Maximum = new decimal(new int[] {
+            this.TableLegsDiameterNum.Location = new System.Drawing.Point(144, 57);
+            this.TableLegsDiameterNum.Maximum = new decimal(new int[] {
             300,
             0,
             0,
             0});
-            this.tableLegsDiameterNum.Name = "tableLegsDiameterNum";
-            this.tableLegsDiameterNum.Size = new System.Drawing.Size(50, 20);
-            this.tableLegsDiameterNum.TabIndex = 3;
-            this.tableLegsDiameterNum.Value = new decimal(new int[] {
+            this.TableLegsDiameterNum.Name = "TableLegsDiameterNum";
+            this.TableLegsDiameterNum.Size = new System.Drawing.Size(50, 20);
+            this.TableLegsDiameterNum.TabIndex = 3;
+            this.TableLegsDiameterNum.Value = new decimal(new int[] {
             125,
             0,
             0,
             0});
+            this.TableLegsDiameterNum.ValueChanged += new System.EventHandler(this.AnyValueNumericUpDown_ValueChanged);
             // 
             // label5
             // 
@@ -178,22 +182,23 @@ namespace TablePlugin.UI
             this.label5.TabIndex = 2;
             this.label5.Text = "Диаметр (50 - 200) мм";
             // 
-            // tableLegsHeightNum
+            // TableLegsHeightNum
             // 
-            this.tableLegsHeightNum.Location = new System.Drawing.Point(144, 23);
-            this.tableLegsHeightNum.Maximum = new decimal(new int[] {
+            this.TableLegsHeightNum.Location = new System.Drawing.Point(144, 23);
+            this.TableLegsHeightNum.Maximum = new decimal(new int[] {
             800,
             0,
             0,
             0});
-            this.tableLegsHeightNum.Name = "tableLegsHeightNum";
-            this.tableLegsHeightNum.Size = new System.Drawing.Size(50, 20);
-            this.tableLegsHeightNum.TabIndex = 1;
-            this.tableLegsHeightNum.Value = new decimal(new int[] {
+            this.TableLegsHeightNum.Name = "TableLegsHeightNum";
+            this.TableLegsHeightNum.Size = new System.Drawing.Size(50, 20);
+            this.TableLegsHeightNum.TabIndex = 1;
+            this.TableLegsHeightNum.Value = new decimal(new int[] {
             550,
             0,
             0,
             0});
+            this.TableLegsHeightNum.ValueChanged += new System.EventHandler(this.AnyValueNumericUpDown_ValueChanged);
             // 
             // label6
             // 
@@ -230,13 +235,13 @@ namespace TablePlugin.UI
             this.Text = "TablePlugin";
             this.tableTopGroupBox.ResumeLayout(false);
             this.tableTopGroupBox.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tableTopHeightNum)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tableTopWidthNum)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tableTopLengthNum)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TableTopHeightNum)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TableTopWidthNum)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TableTopLengthNum)).EndInit();
             this.legsParameters.ResumeLayout(false);
             this.legsParameters.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tableLegsDiameterNum)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tableLegsHeightNum)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TableLegsDiameterNum)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TableLegsHeightNum)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -244,16 +249,16 @@ namespace TablePlugin.UI
         #endregion
 
         private System.Windows.Forms.GroupBox tableTopGroupBox;
-        private System.Windows.Forms.NumericUpDown tableTopHeightNum;
+        private System.Windows.Forms.NumericUpDown TableTopHeightNum;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.NumericUpDown tableTopWidthNum;
+        private System.Windows.Forms.NumericUpDown TableTopWidthNum;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.NumericUpDown tableTopLengthNum;
+        private System.Windows.Forms.NumericUpDown TableTopLengthNum;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox legsParameters;
-        private System.Windows.Forms.NumericUpDown tableLegsDiameterNum;
+        private System.Windows.Forms.NumericUpDown TableLegsDiameterNum;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.NumericUpDown tableLegsHeightNum;
+        private System.Windows.Forms.NumericUpDown TableLegsHeightNum;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button BuildButton;
     }
