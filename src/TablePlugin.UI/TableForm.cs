@@ -33,10 +33,6 @@ namespace TablePlugin.UI
         private Dictionary<ParameterType, string> _errors 
             = new Dictionary<ParameterType, string>();
 
-        /// <summary>
-        /// Словарь названия параметров на русском языке
-        /// </summary>
-        private readonly Dictionary<ParameterType, string> _nameOfParameters;
 
         /// <summary>
         /// Конструктор класса(создан системой) TablePluginForm
@@ -44,14 +40,6 @@ namespace TablePlugin.UI
         public TablePluginForm()
         {
             InitializeComponent();
-            _nameOfParameters = new Dictionary<ParameterType, string>
-            {
-                { ParameterType.TableTopLength, "Длина столешницы" },
-                { ParameterType.TableTopWidth, "Ширина столешницы" },
-                { ParameterType.TableTopHeight, "Высота столешницы" },
-                { ParameterType.TableLegsHeight, "Высота ножек стола" },
-                { ParameterType.TableLegsDiameter, "Диаметр ножек стола" },
-            };
             _tableParameters = new TableParameters();
         }
 
@@ -66,8 +54,7 @@ namespace TablePlugin.UI
             for (var i = 0; i < _errors.Keys.Count; i++)
             {
                 var key = _errors.Keys.ToArray()[i];
-                errorMessage += _nameOfParameters[key] + " " + _errors[key] 
-                                + '\n';
+                errorMessage += _errors[key] + '\n';
             }
             return errorMessage;
         }
@@ -98,7 +85,6 @@ namespace TablePlugin.UI
                 MessageBox.Show(exception.Message, "Ошибка",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
         }
 
         /// <summary>

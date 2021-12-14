@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,11 +18,11 @@ namespace TablePlugin.Model.Parameters
         private readonly Dictionary<ParameterType, Parameter> _parameters =
             new Dictionary<ParameterType, Parameter>
             {
-                { ParameterType.TableTopLength,new Parameter(400,800,600)},
-                { ParameterType.TableTopWidth,new Parameter(400,800,600)},
-                { ParameterType.TableTopHeight,new Parameter(20,80,60)},
-                { ParameterType.TableLegsDiameter,new Parameter(50,200,125)},
-                { ParameterType.TableLegsHeight,new Parameter(400,700,550)},
+                { ParameterType.TableTopLength,new Parameter(400,800,600, "Длина столешницы")},
+                { ParameterType.TableTopWidth,new Parameter(400,800,600, "Ширина столешницы")},
+                { ParameterType.TableTopHeight,new Parameter(20,80,60, "Высота столешницы")},
+                { ParameterType.TableLegsDiameter,new Parameter(50,200,125,"Высота ножек стола")},
+                { ParameterType.TableLegsHeight,new Parameter(400,700,550, "Диаметр ножек стола")},
             };
 
         /// <summary>
@@ -37,38 +38,20 @@ namespace TablePlugin.Model.Parameters
         /// <param name="value">Значение параметра</param>
         public void SetValue(ParameterType parameterType, double value)
         {
-            var minValue = _parameters[parameterType].Minimum;
-            var maxValue = _parameters[parameterType].Maximum;
-
-            switch (parameterType)
-            {
-                case ParameterType.TableTopLength:
-                    break;
-                case ParameterType.TableTopWidth:
-                    break;
-                case ParameterType.TableTopHeight:
-                    break;
-                case ParameterType.TableLegsHeight:
-                    break;
-                case ParameterType.TableLegsDiameter:
-                {
-                    break;
-                }
-            }
-
-            _parameters[parameterType].Minimum = minValue;
-            _parameters[parameterType].Maximum = maxValue;
             _parameters[parameterType].Value = value;
-            if (parameterType == ParameterType.TableTopHeight || parameterType == ParameterType.TableLegsHeight)
+
+            if (parameterType == ParameterType.TableTopHeight 
+                || parameterType == ParameterType.TableLegsHeight)
             {
                 CheckingFullHeightTable();
             }
 
-            if (parameterType == ParameterType.TableLegsDiameter)
+            if (parameterType == ParameterType.TableLegsDiameter
+                || parameterType == ParameterType.TableTopLength
+                || parameterType == ParameterType.TableTopHeight)
             {
-                CheckingDiameterTanbleLegs();
+                CheckingDiameterTanbleLegs(value);
             }
-
         }
 
         /// <summary>
@@ -90,27 +73,35 @@ namespace TablePlugin.Model.Parameters
             var tableLegHeightName = _parameters[ParameterType.TableLegsHeight].Name;
             var fullHeightTable = _parameters[ParameterType.TableTopHeight].Value
                 + _parameters[ParameterType.TableLegsHeight].Value;
-            // TODO
             if (fullHeightTable < 440)
             {
-                throw new ArgumentException($"Общая высота стола({tableTopHeightName} " +
-                                            $"+ {tableLegHeightName}) " +
-                                            $"должна быть больше либо равна 440 мм");
+                string textError = $"Общая высота стола( " + $"{tableTopHeightName} " 
+                                 + $"+ {tableLegHeightName} ) "
+                                 + $"должна быть больше либо равна 440 мм";
+                throw new ArgumentException(textError);
             }
         }
 
         /// <summary>
         /// Проверки диаметра оснований ножек стола
         /// </summary>
-        private void CheckingDiameterTanbleLegs()
+        private void CheckingDiameterTanbleLegs(double valueLegs)
         {
             var tableTopLenght = _parameters[ParameterType.TableTopLength].Value;
             var tableTopWidth = _parameters[ParameterType.TableTopWidth].Value;
-            var tableLegsDiameter = _parameters[ParameterType.TableLegsDiameter].Value;
-           
-            if (tableLegsDiameter >= (tableTopLenght / 3) || tableLegsDiameter >= (tableTopWidth / 3) )
+            var valueLegsDiameter = _parameters[ParameterType.TableLegsDiameter].Value;
+
+            var nameTableTopLenght = _parameters[ParameterType.TableTopLength].Name;
+            var nameTableTopWidth = _parameters[ParameterType.TableTopWidth].Name;
+            var nameLegsDiameter = _parameters[ParameterType.TableLegsDiameter].Name;
+            
+            if (valueLegsDiameter >= (tableTopLenght / 3.0) 
+                || valueLegsDiameter >= (tableTopWidth / 3.0) )
             {
-                throw new ArgumentException("Диаметр ножек стола должен быть меньше");
+                string textError = $"{nameLegsDiameter} должна быть меньше 1/3 значений"
+                                   +$" относительно параметра  {nameTableTopLenght}"
+                                   + " и " + $"{nameTableTopWidth}";
+                throw new ArgumentException(textError);
             }
         }
 

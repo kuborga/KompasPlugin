@@ -38,11 +38,12 @@ namespace TablePlugin.Model.Parameters
         /// <param name="minimum">Минимальное значение</param>
         /// <param name="maximum">Максимальное значение</param>
         /// <param name="value">Значение</param>
-        public Parameter(double minimum, double maximum, double value)
+        public Parameter(double minimum, double maximum, double value,string name)
         {
             Minimum = minimum;
             Maximum = maximum;
             Value = value;
+            Name = name;
         }
 
         /// <summary>
