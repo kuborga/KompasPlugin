@@ -17,16 +17,6 @@ namespace TablePlugin.Model.Parameters
         private string _name;
 
         /// <summary>
-        /// Минимальное значение параметра
-        /// </summary>
-        private double _minimum;
-
-        /// <summary>
-        /// Максимальное значение параметра
-        /// </summary>
-        private double _maximum;
-
-        /// <summary>
         /// Значение параметра
         /// </summary>
         private double _value;
@@ -56,7 +46,8 @@ namespace TablePlugin.Model.Parameters
             {
                 if (String.IsNullOrEmpty(value))
                 {
-                    throw new ArgumentException("Имя параметра не может быть пустым");
+                    throw new ArgumentException(
+                        "Имя параметра не может быть пустым");
                 }
                 else
                 {
@@ -68,26 +59,13 @@ namespace TablePlugin.Model.Parameters
         /// <summary>
         /// Минимальное значение параметра
         /// </summary>
-        public double Minimum
-        {
-            get => _minimum;
-            set
-            {
-                _minimum = value;
-            }
-        }
+        public double Minimum { get; set; }
+
 
         /// <summary>
         ///  Максимальное значение параметра
         /// </summary>
-        public double Maximum
-        {
-            get => _maximum;
-            set
-            {
-                _maximum = value;
-            }
-        }
+        public double Maximum { get; set; }
 
         /// <summary>
         /// Значение параметра
@@ -97,17 +75,13 @@ namespace TablePlugin.Model.Parameters
             get => _value;
             set
             {
+                _value = value;
+                //!Validate(_value, Minimum, Maximum)
                 if (value < Minimum || value > Maximum)
                 {
                     throw new ArgumentException($"{Name}: размер выходит за диапазон" +
-                        $" от {Minimum} до {Maximum} мм");
+                                                $" от {Minimum} до {Maximum} мм");
                 }
-                else
-                {
-                    _value = value;
-                }
-
-
             }
         }
     }

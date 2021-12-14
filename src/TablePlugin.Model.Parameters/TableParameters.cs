@@ -18,11 +18,16 @@ namespace TablePlugin.Model.Parameters
         private readonly Dictionary<ParameterType, Parameter> _parameters =
             new Dictionary<ParameterType, Parameter>
             {
-                { ParameterType.TableTopLength,new Parameter(400,800,600, "Длина столешницы")},
-                { ParameterType.TableTopWidth,new Parameter(400,800,600, "Ширина столешницы")},
-                { ParameterType.TableTopHeight,new Parameter(20,80,60, "Высота столешницы")},
-                { ParameterType.TableLegsDiameter,new Parameter(50,200,125,"Высота ножек стола")},
-                { ParameterType.TableLegsHeight,new Parameter(400,700,550, "Диаметр ножек стола")},
+                { ParameterType.TableTopLength,
+                    new Parameter(400,800,600, "Длина столешницы")},
+                { ParameterType.TableTopWidth,
+                    new Parameter(400,800,600, "Ширина столешницы")},
+                { ParameterType.TableTopHeight,
+                    new Parameter(20,80,60, "Высота столешницы")},
+                { ParameterType.TableLegsDiameter,
+                    new Parameter(50,200,125,"Высота ножек стола")},
+                { ParameterType.TableLegsHeight,
+                    new Parameter(400,700,550, "Диаметр ножек стола")},
             };
 
         /// <summary>
@@ -50,7 +55,7 @@ namespace TablePlugin.Model.Parameters
                 || parameterType == ParameterType.TableTopLength
                 || parameterType == ParameterType.TableTopHeight)
             {
-                CheckingDiameterTanbleLegs(value);
+                CheckingDiameterTableLegs();
             }
         }
 
@@ -83,9 +88,9 @@ namespace TablePlugin.Model.Parameters
         }
 
         /// <summary>
-        /// Проверки диаметра оснований ножек стола
+        /// Проверка для диаметра оснований ножек стола
         /// </summary>
-        private void CheckingDiameterTanbleLegs(double valueLegs)
+        private void CheckingDiameterTableLegs()
         {
             var tableTopLenght = _parameters[ParameterType.TableTopLength].Value;
             var tableTopWidth = _parameters[ParameterType.TableTopWidth].Value;
@@ -97,10 +102,10 @@ namespace TablePlugin.Model.Parameters
             
             if (valueLegsDiameter >= (tableTopLenght / 3.0) 
                 || valueLegsDiameter >= (tableTopWidth / 3.0) )
-            {
-                string textError = $"{nameLegsDiameter} должна быть меньше 1/3 значений"
-                                   +$" относительно параметра  {nameTableTopLenght}"
-                                   + " и " + $"{nameTableTopWidth}";
+            { 
+            string textError = $"{nameLegsDiameter} должна быть меньше 1/3 значений"
+                           +$" относительно параметра  {nameTableTopLenght}"
+                           + " и " + $"{nameTableTopWidth}";
                 throw new ArgumentException(textError);
             }
         }
