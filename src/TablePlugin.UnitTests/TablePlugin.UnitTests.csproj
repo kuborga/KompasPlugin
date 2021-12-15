@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="TestParameter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestTableParameters.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

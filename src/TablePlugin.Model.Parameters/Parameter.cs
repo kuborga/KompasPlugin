@@ -76,7 +76,6 @@ namespace TablePlugin.Model.Parameters
             set
             {
                 _value = value;
-                //!Validate(_value, Minimum, Maximum)
                 if (value < Minimum || value > Maximum)
                 {
                     throw new ArgumentException($"{Name}: размер выходит за диапазон" +

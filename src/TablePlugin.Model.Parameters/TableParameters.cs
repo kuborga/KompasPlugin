@@ -74,8 +74,9 @@ namespace TablePlugin.Model.Parameters
         /// </summary>
         private void CheckingFullHeightTable()
         {
-            var tableTopHeightName = _parameters[ParameterType.TableTopHeight].Name;
-            var tableLegHeightName = _parameters[ParameterType.TableLegsHeight].Name;
+             var tableTopHeightName = _parameters[ParameterType.TableTopHeight].Name;
+             var tableLegHeightName = _parameters[ParameterType.TableLegsHeight].Name;
+    
             var fullHeightTable = _parameters[ParameterType.TableTopHeight].Value
                 + _parameters[ParameterType.TableLegsHeight].Value;
             if (fullHeightTable < 440)
@@ -94,6 +95,8 @@ namespace TablePlugin.Model.Parameters
         {
             var tableTopLenght = _parameters[ParameterType.TableTopLength].Value;
             var tableTopWidth = _parameters[ParameterType.TableTopWidth].Value;
+
+
             var valueLegsDiameter = _parameters[ParameterType.TableLegsDiameter].Value;
 
             var nameTableTopLenght = _parameters[ParameterType.TableTopLength].Name;
