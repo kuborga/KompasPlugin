@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 using System.Runtime.InteropServices;
 using Kompas6API5;
 using Kompas6Constants3D;
@@ -25,7 +26,9 @@ namespace TablePlugin.Model.Kompas
         public ksPart Part { get; set; }
 
         /// <summary>
-        /// Конструктор класса KompasConnector
+        /// Метод запуска компаса в режиме детали,
+        /// инициализация свойств  Document3D, KompasObject, Part
+        /// 
         /// </summary>
         public KompasConnector()
         {
@@ -38,6 +41,7 @@ namespace TablePlugin.Model.Kompas
             {
                 KsObject = (KompasObject)Activator.
                     CreateInstance(Type.GetTypeFromProgID(progId));
+                Thread.Sleep(200);
             }
             var ksDoc = KsObject.Document3D();
             ksDoc.Create(false, true);
@@ -45,5 +49,6 @@ namespace TablePlugin.Model.Kompas
             KsObject.Visible = true;
             KsObject.ActivateControllerAPI();
         }
+
     }
 }

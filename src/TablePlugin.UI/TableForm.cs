@@ -18,7 +18,7 @@ namespace TablePlugin.UI
     public partial class TablePluginForm : Form
     {
         /// <summary>
-        /// Класс построения стола
+        /// Класс для построения стола
         /// </summary>
         private TableBuilder _tableBuilder;
 
@@ -35,7 +35,7 @@ namespace TablePlugin.UI
 
 
         /// <summary>
-        /// Конструктор класса(создан системой) TablePluginForm
+        /// Конструктор класса <see cref="TablePluginForm"/>
         /// </summary>
         public TablePluginForm()
         {
@@ -59,7 +59,6 @@ namespace TablePlugin.UI
             return errorMessage;
         }
 
-
         /// <summary>
         /// Обработчик кнопки "Построить"
         /// </summary>
@@ -78,7 +77,7 @@ namespace TablePlugin.UI
             try
             {
                 _tableBuilder = _tableBuilder ?? new TableBuilder();
-                _tableBuilder.Build(_tableParameters);
+               _tableBuilder.Build(_tableParameters);
             }
             catch (ApplicationException exception)
             {
@@ -92,21 +91,25 @@ namespace TablePlugin.UI
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void AnyValueNumericUpDown_ValueChanged(object sender, EventArgs e)
+        private void AnyValueNumericUpDown_ValueChanged(object sender,
+            EventArgs e)
         {
             if (!(sender is NumericUpDown numericUpDown))
             {
                 return;
             }
-            SetValueParameter(numericUpDown,FindParameters(numericUpDown.Name));
+            SetValueParameter(numericUpDown,
+                FindParameters(numericUpDown.Name));
         }
 
         /// <summary>
-        /// Уставнока значений из numericUpDown в класс TableParameter
+        /// Установление значений из поля <see cref="NumericUpDown"/>
+        /// в класс TableParameter <see cref="TableParameter"/>
         /// </summary>
         /// <param name="numericUpDown"></param>
         /// <param name="parameterType"></param>
-        private void SetValueParameter(NumericUpDown numericUpDown, ParameterType parameterType)
+        private void SetValueParameter(NumericUpDown numericUpDown,
+            ParameterType parameterType)
         {
             try
             {
@@ -134,10 +137,13 @@ namespace TablePlugin.UI
         }
 
         /// <summary>
-        /// Поиск <see cref="Parameters"/> по названию <see cref="NumericUpDown"/>
+        /// Поиск  <see cref="ParameterType"/> по названию
+        /// поля <see cref="NumericUpDown"/>
         /// </summary>
-        /// <param name="numericUpDownName">Название NumericUpDown</param>
-        /// <returns><see cref="ParameterType"/> </returns>
+        /// <param name="numericUpDownName">
+        /// Название <see cref="NumericUpDown"/></param>
+        /// <returns>Возврат значения перечисления
+        /// из <see cref="ParameterType"/> </returns>
         private ParameterType FindParameters(string numericUpDownName)
         {
             var parameters = Enum.GetValues(typeof(ParameterType))
@@ -150,9 +156,8 @@ namespace TablePlugin.UI
                     return parameter;
                 }
             }
-            throw new ArgumentException("Не найдено значение в перечисление TypeParameter");
+            throw new ArgumentException(
+                "Не найдено значение в перечисление TypeParameter");
         }
-
-
     }
 }

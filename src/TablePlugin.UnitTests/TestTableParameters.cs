@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NUnit.Framework;
 using TablePlugin.Model.Parameters;
 using Assert = NUnit.Framework.Assert;
@@ -19,7 +18,8 @@ namespace TablePlugin.UnitTests
         /// <summary>
         /// Позитивные тесты
         /// </summary>
-        /// <param name="parameterType">Тип параметра</param>
+        /// <param name="parameterType">Тип параметра
+        /// <see cref="ParameterType"/></param>
         /// <param name="value">Значение параметра</param>
         [TestCase(ParameterType.TableTopLength, 600,
             Description = "Проверка корректного значения" +
@@ -55,7 +55,8 @@ namespace TablePlugin.UnitTests
         /// <summary>
         /// Позитивные тесты
         /// </summary>
-        /// <param name="parameterType">Тип параметра</param>
+        /// <param name="parameterType">Тип параметра
+        /// <see cref="ParameterType"/></param>
         /// <param name="value">Значение параметра</param>
         [TestCase(ParameterType.TableTopLength, 600,
             Description = "Проверка корректной записи значения" +
@@ -83,6 +84,12 @@ namespace TablePlugin.UnitTests
                 "Не удалось присвоить корректное значение.");
         }
 
+        /// <summary>
+        /// Негативные тесты
+        /// </summary>
+        /// <param name="parameterType">
+        /// <see cref="ParameterType"/></param>
+        /// <param name="value"></param>
         [TestCase(ParameterType.TableTopLength, 300,
             Description = "Проверка некорректной записи значения" +
                           " свойства TableTopLength" +
@@ -91,7 +98,7 @@ namespace TablePlugin.UnitTests
             Description = "Проверка некорректной записи значения" +
                           " свойства TableTopWidth" +
                           " меньше минимального")]
-        [TestCase(ParameterType.TableTopHeight, 10,
+        [TestCase(ParameterType.TableTopHeight, 200,
             Description = "Проверка некорректной записи значения" +
                           "свойства TableTopHeight" +
                           " меньше минимального")]
@@ -132,26 +139,5 @@ namespace TablePlugin.UnitTests
                 () => tableParameters.SetValue(parameterType, value),
                 $"Было присвоино значение не входящие в диапазон");
         }
-
-        [Test(Description = "Негативный проблемный тест")]
-        private void Test_CheckFullHeightTable_IncorrectFullHeight()
-        {
-            //TODO: Спросить у Калентьва как это тестировать!
-            var tableParameters = _tableParameters;
-            PrivateObject privateObject = new PrivateObject(tableParameters);
-            //   tableParameters.SetValue(ParameterType.TableTopHeight, 30);
-            //  tableParameters.SetValue(ParameterType.TableLegsHeight, 400);
-            
-                tableParameters.SetValue(ParameterType.TableTopHeight, 25);
-                tableParameters.SetValue(ParameterType.TableLegsHeight, 402);
-
-           Assert.Throws<ArgumentException>(() => tableParameters.SetValue(
-                        ParameterType.TableLegsHeight, 402),
-                    "Значение суммарной высоты входит диапазон общей высоты забора.");
-
-
-
-        }
-
     }
 }

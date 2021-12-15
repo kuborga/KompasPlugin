@@ -43,20 +43,88 @@ namespace TablePlugin.Model.Parameters
         /// <param name="value">Значение параметра</param>
         public void SetValue(ParameterType parameterType, double value)
         {
+            var minValue = _parameters[parameterType].Minimum;
+            var maxValue = _parameters[parameterType].Maximum;
+
+            switch(parameterType)
+            {
+                case ParameterType.TableTopLength:
+                {
+                    int tempMinValue = (int)(_parameters[ParameterType.
+                        TableLegsDiameter].Value * 3.0 );
+                    minValue = (double.IsNaN(_parameters[ParameterType.
+                        TableTopLength].Value)
+                        ? 400
+                        : tempMinValue);
+                    if (minValue < 400)
+                    {
+                        minValue = 400;
+                    }
+                        break;
+                }
+                case ParameterType.TableTopWidth:
+                {
+                    int tempMinValue = (int)(_parameters[ParameterType.
+                        TableLegsDiameter].Value * 3.0 );
+                    minValue = (double.IsNaN(_parameters[ParameterType.
+                        TableTopWidth].Value)
+                        ? 400
+                        : tempMinValue);
+                    if (minValue < 400)
+                    {
+                        minValue = 400;
+                    }
+                        break;
+                }
+                case ParameterType.TableTopHeight:
+                {
+                    minValue = (double.IsNaN(_parameters[ParameterType.
+                        TableTopHeight].Value)
+                        ? 20
+                        : (440 - _parameters[ParameterType.
+                            TableLegsHeight].Value));
+                    if (minValue < 20)
+                    {
+                        minValue = 20;
+                    }
+                        break;
+                }
+                case ParameterType.TableLegsHeight:
+                {
+                    minValue = (double.IsNaN(_parameters[ParameterType.
+                        TableLegsHeight].Value)
+                        ? 400
+                        : (440 - _parameters[ParameterType.
+                            TableTopHeight].Value));
+                    if (minValue < 400)
+                    {
+                        minValue = 400;
+                    }
+                        break;
+                }
+                case ParameterType.TableLegsDiameter:
+                {
+                  //   минимальное значение из двух завивисимых параметров
+                    double minimumValue = Math.
+                        Min(_parameters[ParameterType.TableTopWidth].Value,
+                        _parameters[ParameterType.TableTopLength].Value);
+                    int tempValue = (int)(minimumValue / 3.0 );
+                    maxValue = (double.IsNaN(_parameters[ParameterType.
+                        TableLegsDiameter].Value)
+                        ? 200
+                        : tempValue);
+                    if (maxValue > 200)
+                    {
+                        maxValue = 200;
+                    }
+                    break;
+                }
+                    
+            }
+
+            _parameters[parameterType].Minimum = minValue;
+            _parameters[parameterType].Maximum = maxValue;
             _parameters[parameterType].Value = value;
-
-            if (parameterType == ParameterType.TableTopHeight 
-                || parameterType == ParameterType.TableLegsHeight)
-            {
-                CheckingFullHeightTable();
-            }
-
-            if (parameterType == ParameterType.TableLegsDiameter
-                || parameterType == ParameterType.TableTopLength
-                || parameterType == ParameterType.TableTopHeight)
-            {
-                CheckingDiameterTableLegs();
-            }
         }
 
         /// <summary>
@@ -67,50 +135,6 @@ namespace TablePlugin.Model.Parameters
         public double GetValue(ParameterType parameterType)
         {
             return _parameters[parameterType].Value;
-        }
-
-        /// <summary>
-        /// Проверка общей высоты стола
-        /// </summary>
-        private void CheckingFullHeightTable()
-        {
-             var tableTopHeightName = _parameters[ParameterType.TableTopHeight].Name;
-             var tableLegHeightName = _parameters[ParameterType.TableLegsHeight].Name;
-    
-            var fullHeightTable = _parameters[ParameterType.TableTopHeight].Value
-                + _parameters[ParameterType.TableLegsHeight].Value;
-            if (fullHeightTable < 440)
-            {
-                string textError = $"Общая высота стола( " + $"{tableTopHeightName} " 
-                                 + $"+ {tableLegHeightName} ) "
-                                 + $"должна быть больше либо равна 440 мм";
-                throw new ArgumentException(textError);
-            }
-        }
-
-        /// <summary>
-        /// Проверка для диаметра оснований ножек стола
-        /// </summary>
-        private void CheckingDiameterTableLegs()
-        {
-            var tableTopLenght = _parameters[ParameterType.TableTopLength].Value;
-            var tableTopWidth = _parameters[ParameterType.TableTopWidth].Value;
-
-
-            var valueLegsDiameter = _parameters[ParameterType.TableLegsDiameter].Value;
-
-            var nameTableTopLenght = _parameters[ParameterType.TableTopLength].Name;
-            var nameTableTopWidth = _parameters[ParameterType.TableTopWidth].Name;
-            var nameLegsDiameter = _parameters[ParameterType.TableLegsDiameter].Name;
-            
-            if (valueLegsDiameter >= (tableTopLenght / 3.0) 
-                || valueLegsDiameter >= (tableTopWidth / 3.0) )
-            { 
-            string textError = $"{nameLegsDiameter} должна быть меньше 1/3 значений"
-                           +$" относительно параметра  {nameTableTopLenght}"
-                           + " и " + $"{nameTableTopWidth}";
-                throw new ArgumentException(textError);
-            }
         }
 
     }

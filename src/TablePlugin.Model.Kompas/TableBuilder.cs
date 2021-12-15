@@ -48,15 +48,19 @@ namespace TablePlugin.Model.Kompas
             var doc2D = (ksDocument2D)sketchDef.BeginEdit();
 
             // Создаём прямоугольник
-            var rectangleParam = (ksRectangleParam)_kompasConnector.KsObject.
-                GetParamStruct((short)StructType2DEnum.ko_RectangleParam);
+            var rectangleParam = 
+                (ksRectangleParam)_kompasConnector.KsObject.
+                GetParamStruct((short)StructType2DEnum.
+                    ko_RectangleParam);
 
             rectangleParam.x = 0;
             rectangleParam.y = 0;
             rectangleParam.ang = 0;
 
-            rectangleParam.height = _tableParameters.GetValue(ParameterType.TableTopWidth);
-            rectangleParam.width = _tableParameters.GetValue(ParameterType.TableTopLength);
+            rectangleParam.height = _tableParameters.
+                GetValue(ParameterType.TableTopWidth);
+            rectangleParam.width = _tableParameters.
+                GetValue(ParameterType.TableTopLength);
             rectangleParam.style = 1;
             doc2D.ksRectangle(rectangleParam);
 
@@ -157,10 +161,12 @@ namespace TablePlugin.Model.Kompas
 
             if(type == ksObj3dTypeEnum.o3d_bossExtrusion)
             {
-                var extrusionDef = (ksBossExtrusionDefinition)extrusionEntity.GetDefinition();
+                var extrusionDef = 
+                  (ksBossExtrusionDefinition)extrusionEntity.GetDefinition();
 
                 // Параметры выдавливания
-                extrusionDef.SetSideParam(side, (short)End_Type.etBlind, height);
+                extrusionDef.SetSideParam(side, 
+                    (short)End_Type.etBlind, height);
                 extrusionDef.directionType = side 
                     ? (short)Direction_Type.dtNormal 
                     : (short)Direction_Type.dtReverse;
@@ -170,10 +176,12 @@ namespace TablePlugin.Model.Kompas
             }
             else if(type == ksObj3dTypeEnum.o3d_cutExtrusion)
             {
-                var extrusionDef = (ksCutExtrusionDefinition)extrusionEntity.GetDefinition();
+                var extrusionDef =
+                    (ksCutExtrusionDefinition)extrusionEntity.GetDefinition();
 
                 // Параметры выдавливания
-                extrusionDef.SetSideParam(side, (short)End_Type.etBlind, height);
+                extrusionDef.SetSideParam(side, (short)End_Type.
+                    etBlind, height);
                 extrusionDef.directionType = side 
                     ? (short)Direction_Type.dtNormal 
                     : (short)Direction_Type.dtReverse;
@@ -182,5 +190,6 @@ namespace TablePlugin.Model.Kompas
             }
             extrusionEntity.Create();
         }
+
     }
 }
