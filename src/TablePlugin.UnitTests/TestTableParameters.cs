@@ -15,12 +15,6 @@ namespace TablePlugin.UnitTests
         /// </summary>
         private TableParameters _tableParameters  = new TableParameters();
 
-        /// <summary>
-        /// Позитивные тесты
-        /// </summary>
-        /// <param name="parameterType">Тип параметра
-        /// <see cref="ParameterType"/></param>
-        /// <param name="value">Значение параметра</param>
         [TestCase(ParameterType.TableTopLength, 600,
             Description = "Проверка корректного значения" +
                           " получения свойства TableTopLength")]
@@ -52,12 +46,6 @@ namespace TablePlugin.UnitTests
                 "Вернулось некорректное значение");
         }
 
-        /// <summary>
-        /// Позитивные тесты
-        /// </summary>
-        /// <param name="parameterType">Тип параметра
-        /// <see cref="ParameterType"/></param>
-        /// <param name="value">Значение параметра</param>
         [TestCase(ParameterType.TableTopLength, 600,
             Description = "Проверка корректной записи значения" +
                           " свойства TableTopLength")]
@@ -84,12 +72,6 @@ namespace TablePlugin.UnitTests
                 "Не удалось присвоить корректное значение.");
         }
 
-        /// <summary>
-        /// Негативные тесты
-        /// </summary>
-        /// <param name="parameterType">
-        /// <see cref="ParameterType"/></param>
-        /// <param name="value"></param>
         [TestCase(ParameterType.TableTopLength, 300,
             Description = "Проверка некорректной записи значения" +
                           " свойства TableTopLength" +

@@ -50,8 +50,10 @@ namespace TablePlugin.Model.Parameters
             {
                 case ParameterType.TableTopLength:
                 {
-                    int tempMinValue = (int)(_parameters[ParameterType.
-                        TableLegsDiameter].Value * 3.0 );
+                    int tempMinValue = (int)Math.
+                        Round(_parameters[ParameterType.TableLegsDiameter].
+                                Value * 3.0, 
+                            0, MidpointRounding.AwayFromZero);
                     minValue = (double.IsNaN(_parameters[ParameterType.
                         TableTopLength].Value)
                         ? 400
@@ -64,8 +66,10 @@ namespace TablePlugin.Model.Parameters
                 }
                 case ParameterType.TableTopWidth:
                 {
-                    int tempMinValue = (int)(_parameters[ParameterType.
-                        TableLegsDiameter].Value * 3.0 );
+                    int tempMinValue = (int)Math.
+                        Round(_parameters[ParameterType.TableLegsDiameter].
+                                Value * 3.0,
+                        0, MidpointRounding.AwayFromZero);
                     minValue = (double.IsNaN(_parameters[ParameterType.
                         TableTopWidth].Value)
                         ? 400
@@ -108,7 +112,8 @@ namespace TablePlugin.Model.Parameters
                     double minimumValue = Math.
                         Min(_parameters[ParameterType.TableTopWidth].Value,
                         _parameters[ParameterType.TableTopLength].Value);
-                    int tempValue = (int)(minimumValue / 3.0 );
+                    int tempValue = (int)Math.Round( minimumValue / 3.0 ,
+                            0 ,MidpointRounding.AwayFromZero);
                     maxValue = (double.IsNaN(_parameters[ParameterType.
                         TableLegsDiameter].Value)
                         ? 200

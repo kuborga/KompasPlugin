@@ -41,7 +41,7 @@ namespace TablePlugin.Model.Kompas
             {
                 KsObject = (KompasObject)Activator.
                     CreateInstance(Type.GetTypeFromProgID(progId));
-                Thread.Sleep(200);
+                Thread.Sleep(300);
             }
             var ksDoc = KsObject.Document3D();
             ksDoc.Create(false, true);
