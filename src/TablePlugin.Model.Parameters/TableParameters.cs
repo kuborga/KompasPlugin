@@ -8,23 +8,60 @@ namespace TablePlugin.Model.Parameters
     /// </summary>
     public class TableParameters
     {
+
+        /// <summary>
+        /// Коэффициент зависимых значений.
+        /// Используется только расчётов.
+        /// </summary>
+        private const double СoefficientDependentParameter = 3.0;
+
+        /// <summary>
+        /// Минимальная длина столешницы
+        /// </summary>
+        private const int MinTableTopLength = 400;
+
+        /// <summary>
+        /// Минимальная ширина столешницы
+        /// </summary>
+        private const int MinTableTopWidth = 400;
+
+        /// <summary>
+        /// Минимальная выоста столешницы
+        /// </summary>
+        private const int MinTableTopHeight = 20;
+
+        /// <summary>
+        /// Максимальное значение ножек стола
+        /// </summary>
+        private const int MaxTableLegsBase = 200;
+
+        /// <summary>
+        /// Минимальная высота ножек стола
+        /// </summary>
+        private const int MinTableLegsHeight = 400;
+
+        /// <summary>
+        /// Минимальная общая (высота столешницы + высота ножек) высота стола
+        /// </summary>
+        private const int MinTotalHeightTable = 441;
+
         /// <summary>
         /// Словарь параметров класса <see cref="TableParameters"/>
         /// </summary>
         private readonly Dictionary<ParameterType, Parameter> _parameters =
             new Dictionary<ParameterType, Parameter>
             {
-                //TODO: to const
+                //TODO: to const (исправил +)
                 { ParameterType.TableTopLength,
-                    new Parameter(400,800,600, "Длина столешницы")},
+                    new Parameter(MinTableTopLength,800,600, "Длина столешницы")},
                 { ParameterType.TableTopWidth,
-                    new Parameter(400,800,600, "Ширина столешницы")},
+                    new Parameter(MinTableTopWidth,800,600, "Ширина столешницы")},
                 { ParameterType.TableTopHeight,
-                    new Parameter(20,80,60, "Высота столешницы")},
+                    new Parameter(MinTableTopHeight,80,60, "Высота столешницы")},
                 { ParameterType.TableLegsBase,
-                    new Parameter(50,200,125,"Основание ножек стола")},
+                    new Parameter(50,MaxTableLegsBase,125,"Основание ножек стола")},
                 { ParameterType.TableLegsHeight,
-                    new Parameter(400,700,550, "Высота ножек стола")},
+                    new Parameter(MinTableLegsHeight,700,550, "Высота ножек стола")},
             };
 
         /// <summary>
@@ -49,17 +86,16 @@ namespace TablePlugin.Model.Parameters
                 {
                     int tempMinValue = (int)Math.
                         Round(_parameters[ParameterType.TableLegsBase].
-                                //TODO: to const
-                                Value * 3.0, 
+                                Value * СoefficientDependentParameter, 
                             0, MidpointRounding.AwayFromZero);
                     minValue = (double.IsNaN(_parameters[ParameterType.
                         TableTopLength].Value)
-                    //TODO: to const
-                        ? 400
+                    //TODO: to const (исправил +)
+                        ? MinTableTopLength
                         : tempMinValue);
-                    if (minValue < 400)
+                    if (minValue < MinTableTopLength)
                     {
-                        minValue = 400;
+                        minValue = MinTableTopLength;
                     }
                     break;
                 }
@@ -67,15 +103,15 @@ namespace TablePlugin.Model.Parameters
                 {
                     int tempMinValue = (int)Math.
                         Round(_parameters[ParameterType.TableLegsBase].
-                                Value * 3.0,
+                                Value * СoefficientDependentParameter,
                         0, MidpointRounding.AwayFromZero);
                     minValue = (double.IsNaN(_parameters[ParameterType.
                         TableTopWidth].Value)
-                        ? 400
+                        ? MinTableTopWidth
                         : tempMinValue);
-                    if (minValue < 400)
+                    if (minValue < MinTableTopWidth)
                     {
-                        minValue = 400;
+                        minValue = MinTableTopWidth;
                     }
                     break;
                 }
@@ -83,13 +119,12 @@ namespace TablePlugin.Model.Parameters
                 {
                     minValue = (double.IsNaN(_parameters[ParameterType.
                         TableTopHeight].Value)
-                    //TODO: to const
-                        ? 20
-                        : (440 - _parameters[ParameterType.
+                        ? MinTableTopHeight
+                        : (MinTotalHeightTable - _parameters[ParameterType.
                             TableLegsHeight].Value));
-                    if (minValue < 20)
+                    if (minValue < MinTableTopHeight)
                     {
-                        minValue = 20;
+                        minValue = MinTableTopHeight;
                     } 
                     break;
                 }
@@ -97,12 +132,12 @@ namespace TablePlugin.Model.Parameters
                 {
                     minValue = (double.IsNaN(_parameters[ParameterType.
                         TableLegsHeight].Value)
-                        ? 400
-                        : (440 - _parameters[ParameterType.
+                        ? MinTableLegsHeight
+                        : (MinTotalHeightTable - _parameters[ParameterType.
                             TableTopHeight].Value));
-                    if (minValue < 400)
+                    if (minValue < MinTableLegsHeight)
                     {
-                        minValue = 400;
+                        minValue = MinTableLegsHeight;
                     }
                     break;
                 }
@@ -111,16 +146,16 @@ namespace TablePlugin.Model.Parameters
                     int minimumValue = Math.
                         Min(_parameters[ParameterType.TableTopWidth].Value,
                         _parameters[ParameterType.TableTopLength].Value);
-                    //TODO: to const
-                    int tempValue = (int)Math.Round( minimumValue / 3.0,
+                    int tempValue = (int)Math.
+                        Round( minimumValue / СoefficientDependentParameter,
                             0 ,MidpointRounding.AwayFromZero);
                     maxValue = (double.IsNaN(_parameters[ParameterType.
                         TableLegsBase].Value)
-                        ? 200
+                        ? MaxTableLegsBase
                         : tempValue);
-                    if (maxValue > 200)
+                    if (maxValue > MaxTableLegsBase)
                     {
-                        maxValue = 200;
+                        maxValue = MaxTableLegsBase;
                     }
                     break;
                 }

@@ -20,11 +20,12 @@ namespace TablePlugin.Model.Kompas
         /// </summary>
         private TableParameters _tableParameters;
 
-        //TODO: Несоответствие XML-комментария сигнатуре метода 
+        //TODO: Несоответствие XML-комментария сигнатуре метода  (исправлено +)
         /// <summary>
-        /// Метод для построение 3D модели
+        /// Метод для построения 3D модели
         /// </summary>
         /// <param name="tableParameters">Параметры стола</param>
+        /// <param name="legsType">Тип ножек стола</param>
         public void Build(TableParameters tableParameters, LegsType legsType)
         {
             _tableParameters = tableParameters;
@@ -77,25 +78,25 @@ namespace TablePlugin.Model.Kompas
             var x = new double[4];
             var y = new double[4];
 
-            x[0] = offsetCoordinate + (legsValue / 2);
-            y[0] = offsetCoordinate + (legsValue / 2);
+            x[0] = offsetCoordinate + (legsValue / 2.0);
+            y[0] = offsetCoordinate + (legsValue / 2.0);
 
             x[1] = _tableParameters.
                        GetValue(ParameterType.TableTopLength)
-                   - (legsValue / 2) - offsetCoordinate;
+                   - (legsValue / 2.0) - offsetCoordinate;
             y[1] = _tableParameters.GetValue(
-                    ParameterType.TableTopWidth) - (legsValue / 2)
+                    ParameterType.TableTopWidth) - (legsValue / 2.0)
                                                  - offsetCoordinate;
 
-            x[2] = offsetCoordinate + (legsValue / 2);
+            x[2] = offsetCoordinate + (legsValue / 2.0);
             y[2] = _tableParameters.GetValue(
-                    ParameterType.TableTopWidth) - (legsValue / 2)
+                    ParameterType.TableTopWidth) - (legsValue / 2.0)
                                                  - offsetCoordinate;
 
             x[3] = _tableParameters.GetValue(
-                    ParameterType.TableTopLength) - (legsValue / 2)
+                    ParameterType.TableTopLength) - (legsValue / 2.0)
                                                   - offsetCoordinate;
-            y[3] = (legsValue / 2) + offsetCoordinate;
+            y[3] = (legsValue / 2.0) + offsetCoordinate;
 
             if (legsType == LegsType.RoundLegs)
             {
@@ -114,7 +115,6 @@ namespace TablePlugin.Model.Kompas
                     var rectagleParam = (ksRectangleParam)_kompasConnector.
                         KsObject.GetParamStruct((short)StructType2DEnum.
                             ko_RectangleParam);
-                    // добавить чтобы здесь как double делилиись
                     rectagleParam.x = x[i] - 
                                       (_tableParameters.
                                           GetValue(ParameterType.
