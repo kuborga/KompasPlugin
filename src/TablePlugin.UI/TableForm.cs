@@ -13,7 +13,7 @@ using TablePlugin.Model.Kompas;
 namespace TablePlugin.UI
 {
     /// <summary>
-    /// Класс для работы с главной формой плагина
+    /// Класс для работы с формой (главным окном) плагина
     /// </summary>
     public partial class TablePluginForm : Form
     {
@@ -28,11 +28,16 @@ namespace TablePlugin.UI
         private TableParameters _tableParameters;
 
         /// <summary>
+        /// Тип ножек стола
+        /// По умолчанию заданы круглые ножки стола.
+        /// </summary>
+        private LegsType _legsType = LegsType.RoundLegs;
+
+        /// <summary>
         /// Словарь ошибок
         /// </summary>
         private Dictionary<ParameterType, string> _errors 
             = new Dictionary<ParameterType, string>();
-
 
         /// <summary>
         /// Конструктор класса <see cref="TablePluginForm"/>
@@ -41,8 +46,10 @@ namespace TablePlugin.UI
         {
             InitializeComponent();
             _tableParameters = new TableParameters();
+              LegsTypeComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+              LegsTypeComboBox.SelectedIndex = 0;
+              ErrorTestTextBox.ReadOnly = true;
         }
-
 
         /// <summary>
         /// Возращает строку всех ошибок
@@ -54,7 +61,7 @@ namespace TablePlugin.UI
             for (var i = 0; i < _errors.Keys.Count; i++)
             {
                 var key = _errors.Keys.ToArray()[i];
-                errorMessage += _errors[key] + '\n';
+                errorMessage += _errors[key] + '\r' + '\n';
             }
             return errorMessage;
         }
@@ -73,11 +80,10 @@ namespace TablePlugin.UI
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-
             try
             {
                 _tableBuilder = _tableBuilder ?? new TableBuilder();
-               _tableBuilder.Build(_tableParameters);
+               _tableBuilder.Build(_tableParameters, _legsType);
             }
             catch (ApplicationException exception)
             {
@@ -87,33 +93,24 @@ namespace TablePlugin.UI
         }
 
         /// <summary>
-        /// Событие при измении значения в поле <see cref="NumericUpDown"/>
+        ///  Установить значение параметру стола
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void AnyValueNumericUpDown_ValueChanged(object sender,
-            EventArgs e)
-        {
-            if (!(sender is NumericUpDown numericUpDown))
-            {
-                return;
-            }
-            SetValueParameter(numericUpDown,
-                FindParameters(numericUpDown.Name));
-        }
-
-        /// <summary>
-        /// Установление значений из поля <see cref="NumericUpDown"/>
-        /// в класс TableParameter <see cref="TableParameter"/>
-        /// </summary>
-        /// <param name="numericUpDown"></param>
-        /// <param name="parameterType"></param>
+        /// <param name="numericUpDown">Значение будет браться из поля
+        /// <see cref="NumericUpDown"/></param>
+        /// <param name="parameterType">Тип параметра для записи</param>
         private void SetValueParameter(NumericUpDown numericUpDown,
             ParameterType parameterType)
         {
             try
             {
-                var value = (double)numericUpDown.Value;
+                var value = (int)numericUpDown.Value;
+                if (numericUpDown.Text == String.Empty)
+                {
+                    var nameParameter = _tableParameters.
+                        GetName(parameterType);
+                    throw new ArgumentException($"{nameParameter}: " +
+                                                $"введена пустая строка.");
+                }
                 _tableParameters.SetValue(parameterType, value);
                 if (_errors.ContainsKey(parameterType))
                 {
@@ -158,6 +155,75 @@ namespace TablePlugin.UI
             }
             throw new ArgumentException(
                 "Не найдено значение в перечисление TypeParameter");
+        }
+
+        /// <summary>
+        /// Событие проверки данных из
+        /// поля <see cref="NumericUpDown"/>
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AnyValueNumericUpDown_Validating(object sender,
+            CancelEventArgs e)
+        {
+            if (!(sender is NumericUpDown numericUpDown))
+            {
+                return;
+            }
+            SetValueParameter(numericUpDown,
+                FindParameters(numericUpDown.Name));
+            ErrorTestTextBox.Text = _errors.Any() 
+                ? GetAllErrors() 
+                : String.Empty;
+        }
+
+        /// <summary>
+        /// Событие при измении индекса текущего выбранного
+        /// элемента из <see cref="ComboBox"/>
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void LegsTypeComboBox_SelectedIndexChanged(object sender,
+            EventArgs e)
+        {
+            switch (LegsTypeComboBox.SelectedIndex)
+            {
+                case 0:
+                {
+                    _legsType = LegsType.RoundLegs;
+                    break;
+                }
+                case 1:
+                {
+                    _legsType = LegsType.SquareLegs;
+                    break;
+                }
+                case 2:
+                {
+                    _legsType = LegsType.TriangularLegs;
+                    break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Обработчик события при изменении значения
+        /// поля <see cref="NumericUpDown"/>
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AnyValueNumericUpDown_ValueChanged(object sender, 
+            EventArgs e)
+        {
+            if (!(sender is NumericUpDown numericUpDown))
+            {
+                return;
+            }
+            SetValueParameter(numericUpDown,
+                FindParameters(numericUpDown.Name));
+            ErrorTestTextBox.Text = _errors.Any()
+                ? GetAllErrors()
+                : String.Empty;
         }
     }
 }

@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TablePlugin.Model.Parameters
 {
@@ -24,14 +20,14 @@ namespace TablePlugin.Model.Parameters
                     new Parameter(400,800,600, "Ширина столешницы")},
                 { ParameterType.TableTopHeight,
                     new Parameter(20,80,60, "Высота столешницы")},
-                { ParameterType.TableLegsDiameter,
-                    new Parameter(50,200,125,"Высота ножек стола")},
+                { ParameterType.TableLegsBase,
+                    new Parameter(50,200,125,"Основание ножек стола")},
                 { ParameterType.TableLegsHeight,
-                    new Parameter(400,700,550, "Диаметр ножек стола")},
+                    new Parameter(400,700,550, "Высота ножек стола")},
             };
 
         /// <summary>
-        /// Конструктор класс <see cref="TableParameters"/> без параметров
+        /// Конструктор класса <see cref="TableParameters"/> без параметров
         /// </summary>
         public TableParameters()
         { }
@@ -41,7 +37,7 @@ namespace TablePlugin.Model.Parameters
         /// </summary>
         /// <param name="parameterType">Тип параметра</param>
         /// <param name="value">Значение параметра</param>
-        public void SetValue(ParameterType parameterType, double value)
+        public void SetValue(ParameterType parameterType, int value)
         {
             var minValue = _parameters[parameterType].Minimum;
             var maxValue = _parameters[parameterType].Maximum;
@@ -51,7 +47,7 @@ namespace TablePlugin.Model.Parameters
                 case ParameterType.TableTopLength:
                 {
                     int tempMinValue = (int)Math.
-                        Round(_parameters[ParameterType.TableLegsDiameter].
+                        Round(_parameters[ParameterType.TableLegsBase].
                                 Value * 3.0, 
                             0, MidpointRounding.AwayFromZero);
                     minValue = (double.IsNaN(_parameters[ParameterType.
@@ -62,12 +58,12 @@ namespace TablePlugin.Model.Parameters
                     {
                         minValue = 400;
                     }
-                        break;
+                    break;
                 }
                 case ParameterType.TableTopWidth:
                 {
                     int tempMinValue = (int)Math.
-                        Round(_parameters[ParameterType.TableLegsDiameter].
+                        Round(_parameters[ParameterType.TableLegsBase].
                                 Value * 3.0,
                         0, MidpointRounding.AwayFromZero);
                     minValue = (double.IsNaN(_parameters[ParameterType.
@@ -78,7 +74,7 @@ namespace TablePlugin.Model.Parameters
                     {
                         minValue = 400;
                     }
-                        break;
+                    break;
                 }
                 case ParameterType.TableTopHeight:
                 {
@@ -90,8 +86,8 @@ namespace TablePlugin.Model.Parameters
                     if (minValue < 20)
                     {
                         minValue = 20;
-                    }
-                        break;
+                    } 
+                    break;
                 }
                 case ParameterType.TableLegsHeight:
                 {
@@ -104,18 +100,17 @@ namespace TablePlugin.Model.Parameters
                     {
                         minValue = 400;
                     }
-                        break;
+                    break;
                 }
-                case ParameterType.TableLegsDiameter:
+                case ParameterType.TableLegsBase:
                 {
-                  //   минимальное значение из двух завивисимых параметров
-                    double minimumValue = Math.
+                    int minimumValue = Math.
                         Min(_parameters[ParameterType.TableTopWidth].Value,
                         _parameters[ParameterType.TableTopLength].Value);
-                    int tempValue = (int)Math.Round( minimumValue / 3.0 ,
+                    int tempValue = (int)Math.Round( minimumValue / 3.0,
                             0 ,MidpointRounding.AwayFromZero);
                     maxValue = (double.IsNaN(_parameters[ParameterType.
-                        TableLegsDiameter].Value)
+                        TableLegsBase].Value)
                         ? 200
                         : tempValue);
                     if (maxValue > 200)
@@ -124,7 +119,6 @@ namespace TablePlugin.Model.Parameters
                     }
                     break;
                 }
-                    
             }
 
             _parameters[parameterType].Minimum = minValue;
@@ -137,10 +131,19 @@ namespace TablePlugin.Model.Parameters
         /// </summary>
         /// <param name="parameterType">Тип параметра</param>
         /// <returns>Значение параметра</returns>
-        public double GetValue(ParameterType parameterType)
+        public int GetValue(ParameterType parameterType)
         {
             return _parameters[parameterType].Value;
         }
 
+        /// <summary>
+        /// Получить название параметра
+        /// </summary>
+        /// <param name="parameterType">Тип параметра</param>
+        /// <returns>Имя параметра</returns>
+        public string GetName(ParameterType parameterType)
+        {
+            return _parameters[parameterType].Name;
+        }
     }
 }

@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Kompas6API5;
+﻿using Kompas6API5;
 using Kompas6Constants3D;
 using Kompas6Constants;
 using TablePlugin.Model.Parameters;
-
 
 namespace TablePlugin.Model.Kompas
 {
@@ -17,12 +11,12 @@ namespace TablePlugin.Model.Kompas
    public class TableBuilder
     {
         /// <summary>
-        /// Коннектор для работы с Компас3D
+        /// Класс для работы с Компас3D
         /// </summary>
         private KompasConnector _kompasConnector;
 
         /// <summary>
-        /// Параметры стола
+        /// Класс параметров стола
         /// </summary>
         private TableParameters _tableParameters;
 
@@ -30,24 +24,23 @@ namespace TablePlugin.Model.Kompas
         /// Метод для построение 3D модели
         /// </summary>
         /// <param name="tableParameters">Параметры стола</param>
-        public void Build(TableParameters tableParameters)
+        public void Build(TableParameters tableParameters, LegsType legsType)
         {
             _tableParameters = tableParameters;
             _kompasConnector = new KompasConnector();
 
             CreateTopTable();
-            CreateTableLegs();
+            CreateTableLegs(legsType);
         }
+
         /// <summary>
         /// Метод для построения столешницы
         /// </summary>
         private void CreateTopTable() 
-        { 
-            // Cоздаём эскиз
+        {
             var sketchDef = CreateSketch(Obj3dType.o3d_planeXOY);
             var doc2D = (ksDocument2D)sketchDef.BeginEdit();
 
-            // Создаём прямоугольник
             var rectangleParam = 
                 (ksRectangleParam)_kompasConnector.KsObject.
                 GetParamStruct((short)StructType2DEnum.
@@ -56,14 +49,12 @@ namespace TablePlugin.Model.Kompas
             rectangleParam.x = 0;
             rectangleParam.y = 0;
             rectangleParam.ang = 0;
-
             rectangleParam.height = _tableParameters.
                 GetValue(ParameterType.TableTopWidth);
             rectangleParam.width = _tableParameters.
                 GetValue(ParameterType.TableTopLength);
             rectangleParam.style = 1;
             doc2D.ksRectangle(rectangleParam);
-
             sketchDef.EndEdit();
             PressOutSketch(sketchDef, _tableParameters.
                 GetValue(ParameterType.TableTopHeight));
@@ -72,15 +63,14 @@ namespace TablePlugin.Model.Kompas
         /// <summary>
         /// Метод для построения ножек стола
         /// </summary>
-        private void CreateTableLegs()
+        private void CreateTableLegs(LegsType legsType)
         {
-            // Cоздаём эскиз
             var sketchDef = CreateSketch(Obj3dType.o3d_planeXOY);
             var doc2D = (ksDocument2D)sketchDef.BeginEdit();
 
             const double offsetCoordinate = 30.0;
             double legsValue = _tableParameters.
-                GetValue(ParameterType.TableLegsDiameter);
+                GetValue(ParameterType.TableLegsBase);
 
             // Координаты центров ножек стола
             var x = new double[4];
@@ -90,33 +80,77 @@ namespace TablePlugin.Model.Kompas
             y[0] = offsetCoordinate + (legsValue / 2);
 
             x[1] = _tableParameters.
-                       GetValue(ParameterType.TableTopLength) 
+                       GetValue(ParameterType.TableTopLength)
                    - (legsValue / 2) - offsetCoordinate;
             y[1] = _tableParameters.GetValue(
-                ParameterType.TableTopWidth) - (legsValue / 2) 
-                                             - offsetCoordinate;
+                    ParameterType.TableTopWidth) - (legsValue / 2)
+                                                 - offsetCoordinate;
 
             x[2] = offsetCoordinate + (legsValue / 2);
             y[2] = _tableParameters.GetValue(
-                ParameterType.TableTopWidth) - (legsValue / 2) 
-                                             - offsetCoordinate;
+                    ParameterType.TableTopWidth) - (legsValue / 2)
+                                                 - offsetCoordinate;
 
             x[3] = _tableParameters.GetValue(
-                ParameterType.TableTopLength) - (legsValue / 2) 
-                                              - offsetCoordinate;
+                    ParameterType.TableTopLength) - (legsValue / 2)
+                                                  - offsetCoordinate;
             y[3] = (legsValue / 2) + offsetCoordinate;
 
-            // Создание окружностей основая ножек
-            for (var i = 0; i < x.Length; i++)
+            if (legsType == LegsType.RoundLegs)
             {
-                doc2D.ksCircle(x[i], y[i], (_tableParameters.
-                    GetValue(ParameterType.TableLegsDiameter) / 2), 1);
+               // Создание круглого основания ножек
+                for (var i = 0; i < x.Length; i++)
+                {
+                    doc2D.ksCircle(x[i], y[i], (_tableParameters.
+                        GetValue(ParameterType.TableLegsBase) / 2.0), 1);
+                }
             }
-
-            // Конец редактирования эскиза
+            else if (legsType == LegsType.SquareLegs)
+            {
+                // Создание квадратного основания ножек
+                for (int i = 0; i < x.Length; i++)
+                {
+                    var rectagleParam = (ksRectangleParam)_kompasConnector.
+                        KsObject.GetParamStruct((short)StructType2DEnum.
+                            ko_RectangleParam);
+                    // добавить чтобы здесь как double делилиись
+                    rectagleParam.x = x[i] - 
+                                      (_tableParameters.
+                                          GetValue(ParameterType.
+                                              TableLegsBase) / 2.0);
+                    rectagleParam.y = y[i] - 
+                                      (_tableParameters.
+                                          GetValue(ParameterType.
+                                              TableLegsBase) / 2.0);
+                    rectagleParam.ang = 0;
+                    rectagleParam.height = _tableParameters.
+                        GetValue(ParameterType.TableLegsBase);
+                    rectagleParam.width = _tableParameters.
+                        GetValue(ParameterType.TableLegsBase);
+                    rectagleParam.style = 1;
+                    doc2D.ksRectangle(rectagleParam);
+                }
+            }
+            else if(legsType == LegsType.TriangularLegs)
+            {
+                // Создание треугольного основания ножек
+                for (int i = 0; i < x.Length; i++)
+                {
+                    var triangle = (ksRegularPolygonParam)
+                        (_kompasConnector.KsObject.GetParamStruct(92));
+                    triangle.count = 3;
+                    triangle.xc = x[i];
+                    triangle.yc = y[i];
+                    triangle.ang = 0;
+                    triangle.radius = (_tableParameters.
+                        GetValue(ParameterType.TableLegsBase) / 2.0) 
+                                      * 1.155;
+                    triangle.describe = false;
+                    triangle.style = 1;
+                    doc2D.ksRegularPolygon(triangle, 0);
+                }
+            }
             sketchDef.EndEdit();
-
-            // Выдавить
             PressOutSketch(sketchDef, _tableParameters.
                 GetValue(ParameterType.TableLegsHeight), side: false);
         }
@@ -136,7 +170,7 @@ namespace TablePlugin.Model.Kompas
             var sketch = (ksEntity)_kompasConnector.Part.
                 NewEntity((short)Obj3dType.o3d_sketch);
 
-            // Устаналвливаем эскизу рабочую плоскость
+            // Устанавливаем эскизу рабочую плоскость
             ksSketchDefinition sketchDef = sketch.GetDefinition();
             sketchDef.SetPlane(plane);
             sketch.Create();
@@ -158,11 +192,11 @@ namespace TablePlugin.Model.Kompas
         { 
             var extrusionEntity = (ksEntity)_kompasConnector.
                 Part.NewEntity((short)type);
-
             if(type == ksObj3dTypeEnum.o3d_bossExtrusion)
             {
                 var extrusionDef = 
-                  (ksBossExtrusionDefinition)extrusionEntity.GetDefinition();
+                  (ksBossExtrusionDefinition)extrusionEntity.
+                      GetDefinition();
 
                 // Параметры выдавливания
                 extrusionDef.SetSideParam(side, 
@@ -177,7 +211,8 @@ namespace TablePlugin.Model.Kompas
             else if(type == ksObj3dTypeEnum.o3d_cutExtrusion)
             {
                 var extrusionDef =
-                    (ksCutExtrusionDefinition)extrusionEntity.GetDefinition();
+                    (ksCutExtrusionDefinition)extrusionEntity.
+                        GetDefinition();
 
                 // Параметры выдавливания
                 extrusionDef.SetSideParam(side, (short)End_Type.

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Threading;
 using System.Runtime.InteropServices;
 using Kompas6API5;
@@ -26,9 +22,7 @@ namespace TablePlugin.Model.Kompas
         public ksPart Part { get; set; }
 
         /// <summary>
-        /// Метод запуска компаса в режиме детали,
-        /// инициализация свойств  Document3D, KompasObject, Part
-        /// 
+        /// Конструктор класса <see cref="KompasConnector"/>
         /// </summary>
         public KompasConnector()
         {
@@ -49,6 +43,5 @@ namespace TablePlugin.Model.Kompas
             KsObject.Visible = true;
             KsObject.ActivateControllerAPI();
         }
-
     }
 }

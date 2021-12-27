@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TablePlugin.Model.Parameters
 {
@@ -19,17 +15,20 @@ namespace TablePlugin.Model.Parameters
         /// <summary>
         /// Значение параметра
         /// </summary>
-        private double _value;
+        private int _value;
 
         /// <summary>
-        /// Конструктор класса Parameter
+        /// Конструктор класса <see cref="Parameter"/>
         /// </summary>
         /// <param name="name">Имя параметра</param>
         /// <param name="minimum">Минимальное значение</param>
         /// <param name="maximum">Максимальное значение</param>
         /// <param name="value">Значение</param>
-        public Parameter(double minimum, double maximum, 
-            double value,string name)
+        public Parameter(
+            int minimum, 
+            int maximum,
+            int value,
+            string name)
         {
             Minimum = minimum;
             Maximum = maximum;
@@ -60,18 +59,17 @@ namespace TablePlugin.Model.Parameters
         /// <summary>
         /// Минимальное значение параметра
         /// </summary>
-        public double Minimum { get; set; }
-
+        public int Minimum { get; set; }
 
         /// <summary>
         ///  Максимальное значение параметра
         /// </summary>
-        public double Maximum { get; set; }
+        public int Maximum { get; set; }
 
         /// <summary>
         /// Значение параметра
         /// </summary>
-        public double Value
+        public int Value
         {
             get => _value;
             set
@@ -81,7 +79,7 @@ namespace TablePlugin.Model.Parameters
                 {
                     throw new ArgumentException(
                         $"{Name}: размер выходит за диапазон" +
-                        $" от {Minimum} до {Maximum} мм");
+                        $" от {Minimum} до {Maximum} мм.");
                 }
             }
         }

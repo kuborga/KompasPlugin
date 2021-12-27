@@ -6,7 +6,7 @@ using Assert = NUnit.Framework.Assert;
 namespace TablePlugin.UnitTests
 {
     /// <summary>
-    /// класс для тестирования класса <see cref="TestTableParameters"/>
+    /// Класс для тестирования класса <see cref="TableParameters"/>
     /// </summary>
     class TestTableParameters
     {
@@ -20,19 +20,19 @@ namespace TablePlugin.UnitTests
                           " получения свойства TableTopLength")]
         [TestCase(ParameterType.TableTopWidth, 700,
             Description = "Проверка корректного значения " +
-                          " получения свойстваTableTopWidth")]
+                          " получения свойства TableTopWidth")]
         [TestCase(ParameterType.TableTopHeight, 60,
             Description = "Проверка корректного значения  " +
-                          " получения свойстваTableTopHeight")]
+                          " получения свойства TableTopHeight")]
         [TestCase(ParameterType.TableLegsHeight, 550,
             Description = "Проверка корректного значения  " +
-                          " получения свойстваTableLegsHeight")]
-        [TestCase(ParameterType.TableLegsDiameter, 130,
+                          " получения свойства TableLegsHeight")]
+        [TestCase(ParameterType.TableLegsBase, 130,
             Description = "Проверка корректного значения " +
-                          " получения свойстваTableLegsHeight")]
+                          " получения свойства TableLegsBase")]
         public void Test_GetValue_CorrectGetValue(
             ParameterType parameterType,
-            double value)
+            int value)
         {
             var tableParameters = _tableParameters;
 
@@ -44,6 +44,39 @@ namespace TablePlugin.UnitTests
 
             Assert.AreEqual(expected, actual, 
                 "Вернулось некорректное значение");
+        }
+
+        [TestCase(ParameterType.TableTopLength,
+            "Длина столешницы",
+            Description = "Проверка корректного получения " +
+                          "названия свойства TableTopLength")]
+        [TestCase(ParameterType.TableTopWidth,
+            "Ширина столешницы",
+            Description = "Проверка корректного  получения " +
+                          "названия свойства TableTopWidth")]
+        [TestCase(ParameterType.TableTopHeight,
+            "Высота столешницы",
+            Description = "Проверка корректного получения " +
+                          "названия свойства TableTopHeight")]
+        [TestCase(ParameterType.TableLegsBase,
+            "Основание ножек стола",
+            Description = "Проверка корректного получения " +
+                          "названия свойства TableLegsBase")]
+        [TestCase(ParameterType.TableLegsHeight,
+            "Высота ножек стола",
+            Description = "Проверка корректного получения " +
+                          "названия свойства TableLegsHeight")]
+        public void Test_GetValue_CorrectGetName(
+            ParameterType parameterType,
+            string name)
+        {
+            var tableParameters = _tableParameters;
+
+            var expected = name;
+
+            var actual = tableParameters.GetName(parameterType);
+            Assert.AreEqual(expected, actual,
+                "Вернулось некорректное название параметра");
         }
 
         [TestCase(ParameterType.TableTopLength, 600,
@@ -58,18 +91,18 @@ namespace TablePlugin.UnitTests
         [TestCase(ParameterType.TableLegsHeight, 550,
             Description = "Проверка корректной записи значения " +
                           " свойства TableLegsHeight")]
-        [TestCase(ParameterType.TableLegsDiameter, 130,
+        [TestCase(ParameterType.TableLegsBase, 130,
             Description = "Проверка корректной записи значения " +
-                          " свойстваTableLegsHeight")]
+                          " свойства TableLegsHeight")]
         public void Test_SetValue_CorrectSetValue(
-            ParameterType parameterType, 
-            double value)
+            ParameterType parameterType,
+            int value)
         {
             var tableParameters = _tableParameters;
 
             Assert.DoesNotThrow(
                 () => tableParameters.SetValue(parameterType, value),
-                "Не удалось присвоить корректное значение.");
+                "Не удалось присвоить корректное значение");
         }
 
         [TestCase(ParameterType.TableTopLength, 300,
@@ -88,9 +121,9 @@ namespace TablePlugin.UnitTests
             Description = "Проверка некорректной записи значения" +
                           " свойства TableLegsHeight" +
                           " меньше минимального ")]
-        [TestCase(ParameterType.TableLegsDiameter, 40,
+        [TestCase(ParameterType.TableLegsBase, 40,
             Description = "Проверка некорректной записи значения" +
-                          " свойстваTableLegsHeight" +
+                          " свойства TableLegsHeight" +
                           " меньше минимального ")]
         [TestCase(ParameterType.TableTopLength, 1000,
             Description = "Проверка некорректной записи значения " +
@@ -108,18 +141,19 @@ namespace TablePlugin.UnitTests
             Description = "Проверка некорректной записи значения  " +
                           " свойства TableLegsHeight" +
                           " больше максимального")]
-        [TestCase(ParameterType.TableLegsDiameter, 1000,
+        [TestCase(ParameterType.TableLegsBase, 1000,
             Description = "Проверка некорректной записи значения " +
-                          " свойстваTableLegsHeight" +
+                          " свойства TableLegsHeight" +
                           " больше максимального")]
         public void Test_SetValue_IncorrectSetValue(
-            ParameterType parameterType, 
-            double value)
+            ParameterType parameterType,
+            int value)
         {
             var tableParameters = _tableParameters;
+
             Assert.Throws<ArgumentException>(
                 () => tableParameters.SetValue(parameterType, value),
-                $"Было присвоино значение не входящие в диапазон");
+                $"Было присвоено значение не входящие в диапазон");
         }
     }
 }

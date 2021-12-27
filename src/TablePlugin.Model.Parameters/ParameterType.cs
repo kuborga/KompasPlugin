@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TablePlugin.Model.Parameters
+﻿namespace TablePlugin.Model.Parameters
 {
     /// <summary>
     /// Перечисление параметров стола
@@ -32,8 +26,8 @@ namespace TablePlugin.Model.Parameters
         TableLegsHeight,
 
         /// <summary>
-        /// Диаметр (основания) ножек стола
+        /// Значение основания ножек стола
         /// </summary>
-        TableLegsDiameter,
+        TableLegsBase,
     }
 }

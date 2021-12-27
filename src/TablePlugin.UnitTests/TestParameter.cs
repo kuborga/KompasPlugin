@@ -20,7 +20,7 @@ namespace TablePlugin.UnitTests
                             "корректного значения свойста Minimum")]
         public void Test_Minimum_CorrectGetValue()
         {
-            var value = 30.0;
+            var value = 30;
 
             var expected = value;
 
@@ -37,7 +37,7 @@ namespace TablePlugin.UnitTests
                             "корректного значения свойста Maximim")]
         public void Test_Maximum_CorrectGetValue()
         {
-            var value = 50.0;
+            var value = 50;
 
             var expected = value;
 
@@ -84,7 +84,7 @@ namespace TablePlugin.UnitTests
                              " значения свойства Value")]
         public void Test_Value_CorrectGetValue()
         {
-            var value = 10.0;
+            var value = 10;
 
             var expected = value;
 
@@ -101,33 +101,33 @@ namespace TablePlugin.UnitTests
                              " значения свойства Value")]
         public void Test_Value_CorrectSetValue()
         {
-            var value = 10.0;
+            var value = 10;
 
             var parameter = new Parameter(1, 20, 
-                10.0, "Название параметра");
+                10, "Название параметра");
 
             Assert.DoesNotThrow(() => parameter.Value = value,
                 "Не удалось присвоить корректное значение");
         }
 
-        [TestCase(10, Description = "Позитивный тест." +
+        [TestCase(10, Description = "Негативный тест." +
                                     "Проверка записи "  +
                                     "значения свойства Value " +
                                     "меньшему минимальному значению." +
                                     "Должно выкинуть исключение")]
-        [TestCase(150, Description = "Позитивный тест." +
+        [TestCase(150, Description = "Негативный тест." +
                                      "Проверка записи" +
                                      " значения свойства Value " +
                                      " больше максимального значения." +
                                      "Должно выкинуть исключение")]
-        public void Test_Value_IncorrectSetValue(double value)
+        public void Test_Value_IncorrectSetValue(int value)
         {
             var parameter = new Parameter(15, 90,
                 20, "Рандомное название параметра");
 
             Assert.Throws<ArgumentException>(() => parameter.Value = value,
-                "Не удалось присвоить корректное значение");
+                "Не вылетела ошибка при некорректном " +
+                "значения свойства Value");
         }
-
     }
 }
