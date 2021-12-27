@@ -14,6 +14,7 @@ namespace TablePlugin.Model.Parameters
         private readonly Dictionary<ParameterType, Parameter> _parameters =
             new Dictionary<ParameterType, Parameter>
             {
+                //TODO: to const
                 { ParameterType.TableTopLength,
                     new Parameter(400,800,600, "Длина столешницы")},
                 { ParameterType.TableTopWidth,
@@ -48,10 +49,12 @@ namespace TablePlugin.Model.Parameters
                 {
                     int tempMinValue = (int)Math.
                         Round(_parameters[ParameterType.TableLegsBase].
+                                //TODO: to const
                                 Value * 3.0, 
                             0, MidpointRounding.AwayFromZero);
                     minValue = (double.IsNaN(_parameters[ParameterType.
                         TableTopLength].Value)
+                    //TODO: to const
                         ? 400
                         : tempMinValue);
                     if (minValue < 400)
@@ -80,6 +83,7 @@ namespace TablePlugin.Model.Parameters
                 {
                     minValue = (double.IsNaN(_parameters[ParameterType.
                         TableTopHeight].Value)
+                    //TODO: to const
                         ? 20
                         : (440 - _parameters[ParameterType.
                             TableLegsHeight].Value));
@@ -107,6 +111,7 @@ namespace TablePlugin.Model.Parameters
                     int minimumValue = Math.
                         Min(_parameters[ParameterType.TableTopWidth].Value,
                         _parameters[ParameterType.TableTopLength].Value);
+                    //TODO: to const
                     int tempValue = (int)Math.Round( minimumValue / 3.0,
                             0 ,MidpointRounding.AwayFromZero);
                     maxValue = (double.IsNaN(_parameters[ParameterType.
