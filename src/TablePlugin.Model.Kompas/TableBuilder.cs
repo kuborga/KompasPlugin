@@ -19,8 +19,7 @@ namespace TablePlugin.Model.Kompas
         /// Класс параметров стола
         /// </summary>
         private TableParameters _tableParameters;
-
-        //TODO: Несоответствие XML-комментария сигнатуре метода  (исправлено +)
+        
         /// <summary>
         /// Метод для построения 3D модели
         /// </summary>

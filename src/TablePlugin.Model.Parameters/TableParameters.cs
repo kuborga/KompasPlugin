@@ -51,7 +51,6 @@ namespace TablePlugin.Model.Parameters
         private readonly Dictionary<ParameterType, Parameter> _parameters =
             new Dictionary<ParameterType, Parameter>
             {
-                //TODO: to const (исправил +)
                 { ParameterType.TableTopLength,
                     new Parameter(MinTableTopLength,800,600, "Длина столешницы")},
                 { ParameterType.TableTopWidth,
@@ -82,6 +81,7 @@ namespace TablePlugin.Model.Parameters
 
             switch(parameterType)
             {
+                //TODO: дубль
                 case ParameterType.TableTopLength:
                 {
                     int tempMinValue = (int)Math.
@@ -90,7 +90,6 @@ namespace TablePlugin.Model.Parameters
                             0, MidpointRounding.AwayFromZero);
                     minValue = (double.IsNaN(_parameters[ParameterType.
                         TableTopLength].Value)
-                    //TODO: to const (исправил +)
                         ? MinTableTopLength
                         : tempMinValue);
                     if (minValue < MinTableTopLength)
@@ -101,7 +100,8 @@ namespace TablePlugin.Model.Parameters
                 }
                 case ParameterType.TableTopWidth:
                 {
-                    int tempMinValue = (int)Math.
+                    //TODO: дубль
+                        int tempMinValue = (int)Math.
                         Round(_parameters[ParameterType.TableLegsBase].
                                 Value * СoefficientDependentParameter,
                         0, MidpointRounding.AwayFromZero);
@@ -117,7 +117,8 @@ namespace TablePlugin.Model.Parameters
                 }
                 case ParameterType.TableTopHeight:
                 {
-                    minValue = (double.IsNaN(_parameters[ParameterType.
+                    //TODO: дубль
+                        minValue = (double.IsNaN(_parameters[ParameterType.
                         TableTopHeight].Value)
                         ? MinTableTopHeight
                         : (MinTotalHeightTable - _parameters[ParameterType.
@@ -130,7 +131,8 @@ namespace TablePlugin.Model.Parameters
                 }
                 case ParameterType.TableLegsHeight:
                 {
-                    minValue = (double.IsNaN(_parameters[ParameterType.
+                    //TODO: дубль
+                        minValue = (double.IsNaN(_parameters[ParameterType.
                         TableLegsHeight].Value)
                         ? MinTableLegsHeight
                         : (MinTotalHeightTable - _parameters[ParameterType.
@@ -143,7 +145,8 @@ namespace TablePlugin.Model.Parameters
                 }
                 case ParameterType.TableLegsBase:
                 {
-                    int minimumValue = Math.
+                    //TODO: дубль
+                        int minimumValue = Math.
                         Min(_parameters[ParameterType.TableTopWidth].Value,
                         _parameters[ParameterType.TableTopLength].Value);
                     int tempValue = (int)Math.

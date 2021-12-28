@@ -61,7 +61,6 @@ namespace TablePlugin.UI
             for (var i = 0; i < _errors.Keys.Count; i++)
             {
                 var key = _errors.Keys.ToArray()[i];
-                //TODO: Проверить ( это работает ) +
                 errorMessage += _errors[key] + Environment.NewLine;
             }
             return errorMessage;
