@@ -37,7 +37,6 @@ namespace StressTest
                                        $"\t{stopWatch.Elapsed:hh\\:mm\\:ss}\t" +
                                        $"{usedMemory}");
                 streamWriter.Flush();
-               i++;
             }
             stopWatch.Stop();
             streamWriter.Close();
