@@ -231,7 +231,7 @@ namespace TablePlugin.Model.Parameters
         private int SetValueDependentParameters(ParameterType parameterType)
         {
             int tempMinValue;
-            int minValue = -1;
+            int minValue;
             int maxValue;
             if (parameterType == ParameterType.TableTopLength 
                 || parameterType == ParameterType.TableTopWidth)
@@ -244,24 +244,23 @@ namespace TablePlugin.Model.Parameters
                      ? MinTableTopLength
                      : tempMinValue);
                 if (parameterType == ParameterType.TableTopLength)
-                 {
-                     if (minValue < MinTableTopLength)
-                     {
-                         minValue = MinTableTopLength;
-                     }
-                 }
-                 else if (parameterType == ParameterType.TableTopWidth)
-                 {
-                     if (minValue < MinTableTopWidth)
-                     {
-                         minValue = MinTableTopWidth;
-                     }
-                 }
+                {
+                    if (minValue < MinTableTopLength)
+                    {
+                        minValue = MinTableTopLength;
+                    }
+                }
+                else if (parameterType == ParameterType.TableTopWidth)
+                {
+                    if (minValue < MinTableTopWidth)
+                    {
+                        minValue = MinTableTopWidth;
+                    }
+                }
 
-                 return minValue;
+                return minValue;
             }
-
-            if (parameterType == ParameterType.TableLegsBase)
+            else if (parameterType == ParameterType.TableLegsBase)
             {
                 int minimumValue = Math.
                     Min(_parameters[ParameterType.TableTopWidth].Value,
