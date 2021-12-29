@@ -229,27 +229,25 @@ namespace TablePlugin.Model.Parameters
         private int SetValueTableLegsBase(ParameterType parameterType,
             int maxAllowedValue)
         {
-            int maxValue = -1;
-            if (parameterType == ParameterType.TableLegsBase)
+            if (parameterType != ParameterType.TableLegsBase)
             {
-                int minimumValue = Math.
-                    Min(_parameters[ParameterType.TableTopWidth].Value,
-                        _parameters[ParameterType.TableTopLength].Value);
-                int tempValue = (int)Math.
-                    Round(minimumValue / СoefficientDependentParameter,
-                        0, MidpointRounding.AwayFromZero);
-                 maxValue = (double.IsNaN(_parameters[ParameterType.
-                    TableLegsBase].Value)
-                    ? MaxTableLegsBase
-                    : tempValue);
-                if (maxValue > maxAllowedValue)
-                {
-                    maxValue = maxAllowedValue;
-                }
-                return maxValue;
+                throw new ArgumentException("Передан неправильный ParameterType " +
+                                         "в метод SetValueTableLegsBase");
             }
-            throw new ArgumentException("Передан неправильный ParameterType " +
-                                        "в метод SetValueTableLegsBase");
+            var minimumValue = Math.
+                Min(_parameters[ParameterType.TableTopWidth].Value,
+                    _parameters[ParameterType.TableTopLength].Value);
+            var tempValue = (int)Math.
+                Round(minimumValue / СoefficientDependentParameter,
+                    0, MidpointRounding.AwayFromZero);
+            var maxValue = (double.IsNaN(_parameters[ParameterType.TableLegsBase].Value)
+                ? MaxTableLegsBase
+                : tempValue);
+            if (maxValue > maxAllowedValue)
+            {
+                maxValue = maxAllowedValue;
+            }
+            return maxValue;
         }
 
 
@@ -260,33 +258,33 @@ namespace TablePlugin.Model.Parameters
         ///  параметра "Значение основание стола" 
         /// </summary>
         /// <param name="parameterType">Тип параметра</param>
+        /// <param name="minAllowedValue"></param>
         /// <returns>Минимум и</returns>
         private int SetValueDependentParameters(ParameterType parameterType, 
             int minAllowedValue)
         {
-            int tempMinValue;
-            int minValue;
-            int maxValue;
-            if (parameterType == ParameterType.TableTopLength 
-                || parameterType == ParameterType.TableTopWidth)
+            if (parameterType != ParameterType.TableTopLength 
+                && parameterType != ParameterType.TableTopWidth)
             {
-                 tempMinValue = (int)Math.
-                    Round(_parameters[ParameterType.TableLegsBase].
-                            Value * СoefficientDependentParameter,
-                        0, MidpointRounding.AwayFromZero);
-                 minValue = (double.IsNaN(_parameters[parameterType].Value)
-                     ? minAllowedValue
-                     : tempMinValue);
+                throw new ArgumentException("Передан неуместный ParameterType " +
+                                         "в метод SetValueDependentParameters");
 
-                 if (minValue < minAllowedValue)
-                    {
-                        minValue = minAllowedValue;
-                    }
-
-                return minValue;
             }
-            throw new ArgumentException("Передан неуместный ParameterType " +
-                                        "в метод SetValueDependentParameters");
+
+            var tempMinValue = (int)Math.
+                Round(_parameters[ParameterType.TableLegsBase].
+                        Value * СoefficientDependentParameter,
+                    0, MidpointRounding.AwayFromZero);
+            var minValue = (double.IsNaN(_parameters[parameterType].Value)
+                ? minAllowedValue
+                : tempMinValue);
+
+            if (minValue < minAllowedValue)
+            {
+                minValue = minAllowedValue;
+            }
+
+            return minValue;
         }
 
         /// <summary>
