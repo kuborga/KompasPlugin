@@ -154,7 +154,7 @@ namespace TablePlugin.UI
                 }
             }
             throw new ArgumentException(
-                "Не найдено значение в перечисление TypeParameter");
+                "Не найдено значение в перечисление ParameterType");
         }
 
         /// <summary>
