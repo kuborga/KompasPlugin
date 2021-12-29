@@ -110,8 +110,8 @@ namespace TablePlugin.Model.Parameters
                 {
                         minValue =
                             SetValueTotalHeightTable(ParameterType.
-                                TableLegsHeight, 
-                                MinTableTopHeight,
+                                TableLegsHeight,
+                                MinTableLegsHeight,
                                 ParameterType.
                                 TableTopHeight);
                         break;
@@ -209,7 +209,7 @@ namespace TablePlugin.Model.Parameters
         private int SetValueDependentParameters(ParameterType parameterType, 
             int minAllowedValue)
         {
-            if (parameterType != ParameterType.TableTopLength 
+            if (parameterType != ParameterType.TableTopLength
                 && parameterType != ParameterType.TableTopWidth)
             {
                 string textError = "Передан неправильный ParameterType " +
