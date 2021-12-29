@@ -82,25 +82,22 @@ namespace TablePlugin.Model.Parameters
 
             switch(parameterType)
             {
-                //TODO: дубль
                 case ParameterType.TableTopLength:
                 {
                     minValue =
-                        SetValueDependentParameters(ParameterType.
-                            TableTopLength, MinTableTopLength);
+                        SetValueDependentParameters(ParameterType.TableTopLength, 
+                            MinTableTopLength);
                         break;
                 }
                 case ParameterType.TableTopWidth:
                 {
-                    //TODO: дубль
                     minValue = 
-                        SetValueDependentParameters(ParameterType.
-                            TableTopWidth, MinTableTopWidth);
+                        SetValueDependentParameters(ParameterType.TableTopWidth, 
+                            MinTableTopWidth);
                         break;
                 }
                 case ParameterType.TableTopHeight:
                 {
-                        //TODO: дубль (было)
                         minValue =
                             SetValueTotalHeightTable(ParameterType.
                                 TableTopHeight,
@@ -111,7 +108,6 @@ namespace TablePlugin.Model.Parameters
                 }
                 case ParameterType.TableLegsHeight:
                 {
-                        //TODO: дубль (было)
                         minValue =
                             SetValueTotalHeightTable(ParameterType.
                                 TableLegsHeight, 
@@ -122,7 +118,6 @@ namespace TablePlugin.Model.Parameters
                 }
                 case ParameterType.TableLegsBase:
                 {
-                    //TODO: дубль
                     maxValue = SetValueTableLegsBase(ParameterType.
                         TableLegsBase,
                         MaxTableLegsBase);
