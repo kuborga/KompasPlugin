@@ -99,7 +99,7 @@ namespace TablePlugin.Model.Parameters
                     //    }
                     minValue =
                         SetValueDependentParameters(ParameterType.
-                            TableTopLength);
+                            TableTopLength, MinTableTopLength);
                         break;
                 }
                 case ParameterType.TableTopWidth:
@@ -119,7 +119,7 @@ namespace TablePlugin.Model.Parameters
                     //    }
                     minValue = 
                         SetValueDependentParameters(ParameterType.
-                            TableTopWidth);
+                            TableTopWidth, MinTableTopWidth);
                         break;
                 }
                 case ParameterType.TableTopHeight:
@@ -132,7 +132,7 @@ namespace TablePlugin.Model.Parameters
                         //    TableLegsHeight].Value));
                         minValue = 
                             SetMinValueTotalHeightTable(ParameterType.
-                                TableTopHeight);
+                                TableTopHeight, MinTableTopHeight);
                         break;
                 }
                 case ParameterType.TableLegsHeight:
@@ -143,9 +143,10 @@ namespace TablePlugin.Model.Parameters
                         //? MinTableLegsHeight
                         //: (MinTotalHeightTable - _parameters[ParameterType.
                         //    TableTopHeight].Value));
-                        minValue = 
+                        //     minValue = SetMinValueTotalHeightTable(ParameterType.TableLegsHeight, MinTableLegsHeight);
+                        minValue =
                             SetMinValueTotalHeightTable(ParameterType.
-                                TableLegsHeight);
+                                TableLegsHeight, MinTableTopHeight);
                         break;
                 }
                 case ParameterType.TableLegsBase:
@@ -165,9 +166,9 @@ namespace TablePlugin.Model.Parameters
                     //    {
                     //        maxValue = MaxTableLegsBase;
                     //    }
-                    maxValue =
-                        SetValueDependentParameters(ParameterType.
-                            TableLegsBase);
+                    maxValue = SetValueTableLegsBase(ParameterType.
+                        TableLegsBase,
+                        MaxTableLegsBase);
                         break;
                 }
             }
@@ -184,51 +185,84 @@ namespace TablePlugin.Model.Parameters
         /// должно быть больше 400
         /// </summary>
         /// <param name="parameterType">Тип параметра</param>
-        /// <returns>Минимальное значение</returns>
-        private int SetMinValueTotalHeightTable(ParameterType parameterType)
+        /// <param name="minAllowedValue">
+        /// Минимальное допустимое значение(const)</param>
+        /// <returns></returns>
+        private int SetMinValueTotalHeightTable(ParameterType parameterType,
+            int minAllowedValue)
         {
             int minValue = -1;
+            int valueDependetParameter = -1;
             if (parameterType == ParameterType.TableTopHeight 
                 || parameterType == ParameterType.TableLegsHeight)
             {
                 if (parameterType == ParameterType.TableTopHeight)
                 {
-                    minValue = (double.IsNaN(_parameters[parameterType].Value) ?
-                        MinTableTopHeight :
-                        (MinTotalHeightTable -
-                         _parameters[ParameterType.TableLegsHeight].Value));
-                    if (minValue < MinTableTopHeight)
-                    {
-                        minValue = MinTableTopHeight;
-                    }
+                    valueDependetParameter = _parameters[ParameterType.
+                        TableLegsHeight].Value;
                 }
                 else if (parameterType == ParameterType.TableLegsHeight)
                 {
-                    minValue = (double.IsNaN(_parameters[parameterType].Value) ?
-                        MinTableLegsHeight :
-                        (MinTotalHeightTable - 
-                         _parameters[ParameterType.TableTopHeight].Value));
-                    if (minValue < MinTableLegsHeight)
-                    {
-                        minValue = MinTableLegsHeight;
-                    }
+                    valueDependetParameter = _parameters[ParameterType.
+                        TableTopHeight].Value;
+                }
+                minValue = (double.IsNaN(_parameters[parameterType].Value) ?
+                    minAllowedValue :
+                    (MinTotalHeightTable - valueDependetParameter));
+                if (minValue < minAllowedValue)
+                {
+                    minValue = minAllowedValue;
                 }
                 return minValue;
             }
-            throw new ArgumentException("Передан неуместный ParameterType " +
+            throw new ArgumentException("Передан неправильный ParameterType " +
                                         "в метод SetMinValueTotalHeightTable");
+        }
+
+        /// <summary>
+        /// Установка значений для параметра "Основание ножек стола".
+        /// 
+        /// </summary>
+        /// <param name="parameterType">Тип параметра</param>
+        /// <param name="maxAllowedValue">Максимальное допустимое значение</param>
+        /// <returns></returns>
+        private int SetValueTableLegsBase(ParameterType parameterType,
+            int maxAllowedValue)
+        {
+            int maxValue = -1;
+            if (parameterType == ParameterType.TableLegsBase)
+            {
+                int minimumValue = Math.
+                    Min(_parameters[ParameterType.TableTopWidth].Value,
+                        _parameters[ParameterType.TableTopLength].Value);
+                int tempValue = (int)Math.
+                    Round(minimumValue / СoefficientDependentParameter,
+                        0, MidpointRounding.AwayFromZero);
+                 maxValue = (double.IsNaN(_parameters[ParameterType.
+                    TableLegsBase].Value)
+                    ? MaxTableLegsBase
+                    : tempValue);
+                if (maxValue > maxAllowedValue)
+                {
+                    maxValue = maxAllowedValue;
+                }
+                return maxValue;
+            }
+            throw new ArgumentException("Передан неправильный ParameterType " +
+                                        "в метод SetValueTableLegsBase");
         }
 
 
         /// <summary>
-        /// Установка значений для параметра "Значения основание стола",
+        /// Установка значений для параметра
         /// "Длина столешницы", "Ширина столешницы".
         ///  "Длина столешницы", "Ширина столешницы" зависят от
-        /// "Значение основание стола" 
+        ///  параметра "Значение основание стола" 
         /// </summary>
         /// <param name="parameterType">Тип параметра</param>
-        /// <returns>Минимум или Максимум</returns>
-        private int SetValueDependentParameters(ParameterType parameterType)
+        /// <returns>Минимум и</returns>
+        private int SetValueDependentParameters(ParameterType parameterType, 
+            int minAllowedValue)
         {
             int tempMinValue;
             int minValue;
@@ -241,42 +275,15 @@ namespace TablePlugin.Model.Parameters
                             Value * СoefficientDependentParameter,
                         0, MidpointRounding.AwayFromZero);
                  minValue = (double.IsNaN(_parameters[parameterType].Value)
-                     ? MinTableTopLength
+                     ? minAllowedValue
                      : tempMinValue);
-                if (parameterType == ParameterType.TableTopLength)
-                {
-                    if (minValue < MinTableTopLength)
+
+                 if (minValue < minAllowedValue)
                     {
-                        minValue = MinTableTopLength;
+                        minValue = minAllowedValue;
                     }
-                }
-                else if (parameterType == ParameterType.TableTopWidth)
-                {
-                    if (minValue < MinTableTopWidth)
-                    {
-                        minValue = MinTableTopWidth;
-                    }
-                }
 
                 return minValue;
-            }
-            else if (parameterType == ParameterType.TableLegsBase)
-            {
-                int minimumValue = Math.
-                    Min(_parameters[ParameterType.TableTopWidth].Value,
-                        _parameters[ParameterType.TableTopLength].Value);
-                int tempValue = (int)Math.
-                    Round(minimumValue / СoefficientDependentParameter,
-                        0, MidpointRounding.AwayFromZero);
-                maxValue = (double.IsNaN(_parameters[ParameterType.
-                    TableLegsBase].Value)
-                    ? MaxTableLegsBase
-                    : tempValue);
-                if (maxValue > MaxTableLegsBase)
-                {
-                    maxValue = MaxTableLegsBase;
-                }
-                return maxValue;
             }
             throw new ArgumentException("Передан неуместный ParameterType " +
                                         "в метод SetValueDependentParameters");
